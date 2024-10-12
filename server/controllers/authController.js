@@ -39,7 +39,6 @@ exports.login = async (req, res) => {
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        role: user.role,
                     },
                 });
             } else {
@@ -57,18 +56,7 @@ exports.login = async (req, res) => {
 
 // Register function
 exports.register = async (req, res) => {
-    const {
-        name,
-        age,
-        role,
-        batch,
-        phone,
-        emergencyContact,
-        address,
-        username,
-        email,
-        password,
-    } = req.body;
+    const { name, age, username, email, password } = req.body;
 
     try {
         // Check if the user already exists
@@ -83,11 +71,6 @@ exports.register = async (req, res) => {
         user = new User({
             name,
             age,
-            role,
-            batch,
-            phone,
-            emergencyContact,
-            address,
             username,
             email,
             password: hashedPassword, // Store hashed password
@@ -107,7 +90,6 @@ exports.register = async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role,
             },
         });
     } catch (error) {
