@@ -39,7 +39,6 @@ exports.login = async (req, res) => {
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        role: user.role,
                     },
                 });
             } else {
@@ -51,24 +50,13 @@ exports.login = async (req, res) => {
         });
     } catch (error) {
         console.error("Login error:", error);
-        return res.status(500).json({ message: "Server error" });
+        return res.status(500).json({ message: error });
     }
 };
 
 // Register function
 exports.register = async (req, res) => {
-    const {
-        name,
-        age,
-        role,
-        batch,
-        phone,
-        emergencyContact,
-        address,
-        username,
-        email,
-        password,
-    } = req.body;
+    const { name, age, username, email, password } = req.body;
 
     try {
         // Check if the user already exists
@@ -76,7 +64,6 @@ exports.register = async (req, res) => {
         if (user) {
             return res.status(400).json({ message: "User already exists" });
         }
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -84,11 +71,6 @@ exports.register = async (req, res) => {
         user = new User({
             name,
             age,
-            role,
-            batch,
-            phone,
-            emergencyContact,
-            address,
             username,
             email,
             password: hashedPassword, // Store hashed password
@@ -108,7 +90,6 @@ exports.register = async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role,
             },
         });
     } catch (error) {
