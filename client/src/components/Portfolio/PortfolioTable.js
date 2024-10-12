@@ -173,11 +173,11 @@ export default function PortfolioTable() {
         variant="h4"
         fontWeight="bold"
         gutterBottom
-        sx={{ mb: 2, textAlign: 'center' }} 
+        sx={{ mb: 2, textAlign: 'left' }} 
       >
-        Transaction History
+        Portfolio Table
       </Typography>
-      <Box sx={{ width: '100%', minWidth: 600 }}> 
+      <Box sx={{ width: '70%', minWidth: 600 }}> 
         <DataGrid
           autoHeight
           rows={rows}

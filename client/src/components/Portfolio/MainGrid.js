@@ -8,6 +8,7 @@ import PageViewsBarChart from './PageViewsBarChart';
 import SessionsChart from './SessionsChart';
 import StatCard from './StatCard';
 
+
 const data = [
   {
     title: 'Users',
@@ -68,9 +69,6 @@ export default function MainGrid() {
           <PageViewsBarChart />
         </Grid>
       </Grid>
-      <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Details
-      </Typography>
       <Grid container spacing={2} columns={12}>
         <Grid size={{ md: 12, lg: 9 }}>
           
