@@ -7,7 +7,7 @@ import ChartUserByCountry from './ChartUserByCountry';
 import PageViewsBarChart from './PageViewsBarChart';
 import SessionsChart from './SessionsChart';
 import StatCard from './StatCard';
-
+import PortfolioTable from './PortfolioTable';  // Import the PortfolioTable component
 
 const data = [
   {
@@ -60,8 +60,7 @@ export default function MainGrid() {
             <StatCard {...card} />
           </Grid>
         ))}
-        <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        </Grid>
+        <Grid size={{ xs: 12, sm: 6, lg: 3 }}></Grid>
         <Grid size={{ sm: 12, md: 6 }}>
           <SessionsChart />
         </Grid>
@@ -69,9 +68,11 @@ export default function MainGrid() {
           <PageViewsBarChart />
         </Grid>
       </Grid>
+
       <Grid container spacing={2} columns={12}>
         <Grid size={{ md: 12, lg: 9 }}>
-          
+          {/* Include PortfolioTable here */}
+          <PortfolioTable />  {/* This will render your table in this space */}
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
           <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>

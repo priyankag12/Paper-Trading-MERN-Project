@@ -175,9 +175,8 @@ export default function PortfolioTable() {
         gutterBottom
         sx={{ mb: 2, textAlign: 'left' }} 
       >
-        Portfolio Table
       </Typography>
-      <Box sx={{ width: '70%', minWidth: 600 }}> 
+      <Box sx={{ width: '100%', minWidth: 600 }}> 
         <DataGrid
           autoHeight
           rows={rows}

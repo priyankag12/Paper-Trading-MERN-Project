@@ -141,7 +141,7 @@ export default function ChartUserByCountry() {
                 highlightScope: { faded: 'global', highlighted: 'item' },
               },
             ]}
-            height={260}
+            height={385}
             width={260}
             slotProps={{
               legend: { hidden: true },
