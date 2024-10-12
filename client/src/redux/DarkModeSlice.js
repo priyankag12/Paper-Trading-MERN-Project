@@ -1,14 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialMode = localStorage.getItem("themeMode") || "dark";
 
 export const globalSlice = createSlice({
-    name: 'global',
-    initialState: { mode: 'dark' },
+    name: "global",
+    initialState: { mode: initialMode },
     reducers: {
         setMode: (state) => {
-            state.mode = state.mode === 'light' ? 'dark' : 'light'
-        }
+            state.mode = state.mode === "light" ? "dark" : "light";
+            localStorage.setItem("themeMode", state.mode);
+        },
     },
-  });
+});
 
-export const { setMode }  =  globalSlice.actions;
+export const { setMode } = globalSlice.actions;
 export default globalSlice.reducer;
