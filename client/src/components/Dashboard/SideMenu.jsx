@@ -85,14 +85,13 @@ export default function SideMenu() {
           {menuItems.slice(0, -1).map((item, index) => (
             <ListItem key={index} disablePadding onClick={() => navigate(item.route)}>
               <ListItemButton>
-                <ListItemIcon >{item.icon}</ListItemIcon>
+                <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
-
 
         <Stack
           direction="row"
