@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
@@ -19,11 +19,13 @@ const MenuItem = styled(MuiMenuItem)({
 });
 
 function OptionsMenu({ showBadge = false }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -36,7 +38,7 @@ function OptionsMenu({ showBadge = false }) {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Badge
         color="error"
         variant="dot"
@@ -90,7 +92,7 @@ function OptionsMenu({ showBadge = false }) {
           </ListItemIcon>
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

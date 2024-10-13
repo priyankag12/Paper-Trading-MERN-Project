@@ -1,7 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography } from '@mui/material';
-
 
 const columns = [
   { field: 'transactionId', headerName: 'Transaction ID', flex: 1, minWidth: 110 },
@@ -168,16 +167,16 @@ const rows = [
 
 export default function Transaction() {
   return (
-    <Box sx={{overflowX: 'auto', maxWidth: '100%' }}>
+    <Box sx={{ overflowX: 'auto', maxWidth: '100%' }}>
       <Typography
         variant="h4"
         fontWeight="bold"
         gutterBottom
-        sx={{ mb: 2, textAlign: 'center' }} 
+        sx={{ mb: 2, textAlign: 'center' }}
       >
         Transaction History
       </Typography>
-      <Box sx={{ width: '100%', minWidth: 600 }}> 
+      <Box sx={{ width: '100%', minWidth: 600 }}>
         <DataGrid
           autoHeight
           rows={rows}

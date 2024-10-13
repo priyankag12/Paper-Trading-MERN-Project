@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react'; 
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -11,10 +11,10 @@ import { useDispatch } from 'react-redux';
 import { closeMobileMenu } from '../../redux/MobileMenuSlice';
 
 export default function Dashboard() {
-    const isMobile = useMediaQuery('(max-width: 900px)'); 
+    const isMobile = useMediaQuery('(max-width: 900px)');
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isMobile) {
             dispatch(closeMobileMenu());
         }
@@ -38,8 +38,8 @@ export default function Dashboard() {
                     component="main"
                     sx={(theme) => ({
                         flexGrow: 1,
-                        mt: {md: 9},
-                        marginInline: 'auto', 
+                        mt: { md: 9 },
+                        marginInline: 'auto',
                         backgroundColor: theme.vars
                             ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
                             : theme.palette.background.default,
