@@ -9,7 +9,6 @@ apiClient.interceptors.request.use(
     (config) => {
         const token = getToken();
         if (token) {
-            console.log("Attaching token:", token);
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;

@@ -18,6 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import OptionsMenu from './OptionsMenu';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { getUserInfo } from '../../auth';
 
 const drawerWidth = 240;
 
@@ -71,8 +72,7 @@ export default function SideMenu() {
   const theme = useTheme();
   const isOpen = useSelector((state) => state.sidebar.isOpen);
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state.user.userInfo);
-  console.log(userInfo); 
+  const userInfo = getUserInfo();
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={isOpen}>

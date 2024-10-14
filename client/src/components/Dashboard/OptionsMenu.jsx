@@ -13,6 +13,9 @@ import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'; 
+import { clearUser } from '../../redux/UserSlice'; 
+import { removeToken, removeUserInfo } from '../../auth'; 
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
@@ -21,6 +24,8 @@ const MenuItem = styled(MuiMenuItem)({
 function OptionsMenu({ showBadge = false }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,12 +33,13 @@ function OptionsMenu({ showBadge = false }) {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const navigate = useNavigate();
+  }; 
 
   const handleLogout = () => {
     handleClose();
+    removeToken();
+    removeUserInfo();
+    dispatch(clearUser());
     navigate('/');
   };
 
