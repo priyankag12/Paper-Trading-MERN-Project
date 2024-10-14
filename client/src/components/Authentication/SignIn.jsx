@@ -10,6 +10,10 @@ import { styled } from "@mui/material/styles";
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword";
 import { loginUser } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/UserSlice";
+import { storeToken } from "../../auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -54,6 +58,8 @@ export default function SignIn(props) {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
     const [open, setOpen] = useState(false);
     const [authError, setAuthError] = useState("");
+    const navigate = useNavigate(); 
+    const dispatch = useDispatch();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -72,10 +78,21 @@ export default function SignIn(props) {
         const input = new Object();
         input.email = data.get("email");
         input.password = data.get("password");
+        
         try {
-            await loginUser(input);
+            const resp = await loginUser(input);
+            const token = resp.token; 
+
+            if (token) {
+                storeToken(token); 
+                dispatch(setUser(resp.user)); 
+                navigate("/dashboard/home");
+            } else {
+                setAuthError('No token received from the server'); 
+            }
+            console.log(resp); 
         } catch (error) {
-            setAuthError(error);
+            setAuthError(error.message); 
             alert(error);
         }
     };

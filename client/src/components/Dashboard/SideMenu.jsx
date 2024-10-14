@@ -71,7 +71,8 @@ export default function SideMenu() {
   const theme = useTheme();
   const isOpen = useSelector((state) => state.sidebar.isOpen);
   const navigate = useNavigate();
-
+  const userInfo = useSelector((state) => state.user.userInfo);
+  console.log(userInfo); 
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={isOpen}>
@@ -111,11 +112,11 @@ export default function SideMenu() {
             sx={{ width: 36, height: 36 }}
           />
           <Box sx={{ mr: 'auto', pl: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-              Riley Carter
+          <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
+              {userInfo ? userInfo.name : 'Guest'} 
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              riley@email.com
+              {userInfo ? userInfo.email : ''} 
             </Typography>
           </Box>
           <OptionsMenu />
