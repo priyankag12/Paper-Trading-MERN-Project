@@ -13,7 +13,7 @@ import { loginUser } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/UserSlice";
-import { storeToken } from "../../auth";
+import { storeToken, storeUserInfo } from "../../auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -75,9 +75,10 @@ export default function SignIn(props) {
             return;
         }
         const data = new FormData(event.currentTarget);
-        const input = new Object();
-        input.email = data.get("email");
-        input.password = data.get("password");
+        const input = {
+            email: data.get("email"),
+            password: data.get("password"),
+        };
         
         try {
             const resp = await loginUser(input);
@@ -85,6 +86,7 @@ export default function SignIn(props) {
 
             if (token) {
                 storeToken(token); 
+                storeUserInfo(resp.user);
                 dispatch(setUser(resp.user)); 
                 navigate("/dashboard/home");
             } else {
