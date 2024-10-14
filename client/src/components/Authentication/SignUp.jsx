@@ -9,6 +9,7 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { registerUser } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -57,6 +58,7 @@ export default function SignUp() {
     const [authError, setAuthError] = useState("");
     const [nameError, setNameError] = useState(false);
     const [nameErrorMessage, setNameErrorMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -73,6 +75,7 @@ export default function SignUp() {
         input.password = data.get("password");
         try {
             const resp = await registerUser(input);
+            navigate("/signin");
             console.log(resp);
         } catch (error) {
             setAuthError(error);

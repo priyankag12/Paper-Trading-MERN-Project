@@ -6,13 +6,17 @@ const transactionSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
+    transactionId: {
+        type: String, 
+        unique: true, 
+    },
     stockName: {
         type: String,
         required: true,
     },
     transactionType: {
         type: String,
-        enum: ["buy", "sell"],
+        enum: ["Buy", "Sell"],
         required: true,
     },
     quantity: {
@@ -31,6 +35,32 @@ const transactionSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-}, {timestamps: true});
+}, { timestamps: true });
+
+// Function to generate a random string
+const generateRandomString = (length) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+};
+
+transactionSchema.pre('save', async function (next) {
+    if (!this.transactionId) {
+        let unique = false;
+        while (!unique) {
+            const shortTimestamp = Date.now().toString().slice(-6); 
+            const randomString = generateRandomString(4); 
+            this.transactionId = `TXN${shortTimestamp}${randomString}`; 
+
+            // Check for uniqueness
+            const existingTransaction = await mongoose.model("Transaction").findOne({ transactionId: this.transactionId });
+            unique = !existingTransaction; 
+        }
+    }
+    next();
+});
 
 module.exports = mongoose.model("Transaction", transactionSchema);
