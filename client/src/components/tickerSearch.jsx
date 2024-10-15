@@ -6,19 +6,18 @@ import {
     List,
     ListItem,
     ListItemText,
+    Stack,
 } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import axios from "axios";
 
-const TickerSearch = () => {
-    const [inputValue, setInputValue] = useState(""); // Store user input
-    const [loading, setLoading] = useState(false); // Loading state for API call
-    const [options, setOptions] = useState([]); // Store fetched options
-    const [selectedOption, setSelectedOption] = useState(null); // Store user selected option
+const TickerSearch = ({ onSelectStock }) => {
+    const [inputValue, setInputValue] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [options, setOptions] = useState([]);
 
-    // Access API key from the .env file
     const API_KEY = "";
 
-    // Fetch stock ticker data from Alpha Vantage
     const fetchTickers = async () => {
         setLoading(true);
         try {
@@ -27,7 +26,7 @@ const TickerSearch = () => {
                 {
                     params: {
                         function: "SYMBOL_SEARCH",
-                        keywords: inputValue, // Use user input
+                        keywords: inputValue,
                         apikey: API_KEY,
                     },
                 }
@@ -37,46 +36,53 @@ const TickerSearch = () => {
                 symbol: item["1. symbol"],
                 name: item["2. name"],
             }));
-            setOptions(tickers); // Store the fetched options
+            setOptions(tickers);
         } catch (error) {
             console.error("Error fetching ticker data:", error);
         }
         setLoading(false);
     };
 
-    // Handle user selection of a ticker
     const handleSelect = (option) => {
-        setSelectedOption(option);
-        setOptions([]); // Clear options after selection
-        setInputValue(""); // Optionally clear the input field
+        onSelectStock(option);
+        setOptions([]);
+        setInputValue("");
     };
 
     return (
         <div>
-            {/* Input field for manual user entry */}
-            <TextField
-                label="Enter Ticker Search Query"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                fullWidth
-            />
-
-            {/* Search button */}
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={fetchTickers}
-                disabled={loading || !inputValue}
-                style={{ marginTop: "20px" }}
+            <Stack
+                direction="row"
+                sx={{
+                    p: 2,
+                    gap: 1,
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    borderTop: "1px solid",
+                    borderColor: "divider",
+                    mt: "auto",
+                    width: "100%",
+                }}
             >
-                {loading ? (
-                    <CircularProgress color="inherit" size={20} />
-                ) : (
-                    "Search"
-                )}
-            </Button>
+                <TextField
+                    label="Enter Ticker Search Query"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={fetchTickers}
+                    disabled={loading || !inputValue}
+                >
+                    {loading ? (
+                        <CircularProgress color="inherit" size={20} />
+                    ) : (
+                        "Search"
+                    )}
+                </Button>
+            </Stack>
 
-            {/* Display search results */}
             {options.length > 0 && (
                 <List>
                     {options.map((option, index) => (
@@ -85,22 +91,39 @@ const TickerSearch = () => {
                             key={index}
                             onClick={() => handleSelect(option)}
                         >
-                            <ListItemText
-                                primary={`${option.symbol} - ${option.name}`}
-                            />
+                            <Stack
+                                direction="row"
+                                sx={{
+                                    p: 2,
+                                    gap: 10,
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    borderTop: "1px solid",
+                                    borderColor: "divider",
+                                    mt: "auto",
+                                    width: "100%",
+                                }}
+                            >
+                                <ListItemText
+                                    primary={
+                                        <Typography
+                                            variant="body1"
+                                            style={{ fontWeight: "bold" }}
+                                        >
+                                            {`${option.symbol}`}
+                                        </Typography>
+                                    }
+                                />
+                                <ListItemText
+                                    primary={`${option.name}`}
+                                    sx={{
+                                        width: "100%",
+                                    }}
+                                />
+                            </Stack>
                         </ListItem>
                     ))}
                 </List>
-            )}
-
-            {/* Display the selected option */}
-            {selectedOption && (
-                <div style={{ marginTop: "20px" }}>
-                    <h3>Selected Ticker:</h3>
-                    <p>
-                        {selectedOption.symbol} - {selectedOption.name}
-                    </p>
-                </div>
             )}
         </div>
     );

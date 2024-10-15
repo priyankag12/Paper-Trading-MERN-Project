@@ -10,7 +10,13 @@ const authRoutes = require("./routes/authRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 
 // Middleware
-app.use(cors({ origin: true }));
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+        allowedHeaders: ["Authorization", "Content-Type"],
+    })
+);
 app.use(express.json());
 
 // Routes

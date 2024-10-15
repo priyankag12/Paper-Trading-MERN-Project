@@ -13,7 +13,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./Theme";
 import { useSelector } from "react-redux";
-import TickerSearch from "./components/tickerSearch";
+import BuySellStocks from "./components/BuySellStocks";
 import CandleStickGraph from "./components/CandleStickGraph";
 
 function App() {
@@ -33,9 +33,10 @@ function App() {
                         <Route path="transaction-history" element={<TransactionHistory />} />
                         <Route path="earn-points" element={<EarnPoints />} />
                         <Route path="leaderboard" element={<LeaderBoard />} />
+                        <Route path="trade" element={<BuySellStocks />} />
                     </Route>
                     <Route path="/" element={<LandingPage />} />
-                    <Route path="ticker" element={<TickerSearch />} />
+
                     <Route
                         path="candle"
                         element={<CandleStickGraph symbol="IBM" />}
