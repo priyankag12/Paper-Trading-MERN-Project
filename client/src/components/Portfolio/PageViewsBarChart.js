@@ -19,7 +19,7 @@ export default function PageViewsBarChart() {
     <Card variant="outlined" sx={{ width: '100%' }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom>
-          Page views and downloads
+        Indiviual Stock Graph
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
           <Stack
@@ -36,7 +36,7 @@ export default function PageViewsBarChart() {
             <Chip size="small" color="error" label="-8%" />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Page views and downloads for the last 6 months
+            Growth/Loss of each indiviual stock
           </Typography>
         </Stack>
         <BarChart

@@ -4,13 +4,13 @@ import { Box, Typography } from '@mui/material';
 
 
 const columns = [
-  { field: 'transactionId', headerName: 'Transaction ID', flex: 1, minWidth: 110 },
+  { field: 'portfolioId', headerName: 'Portfolio ID', flex: 1, minWidth: 110 },
   { field: 'stockName', headerName: 'Stock Name', flex: 1.5, minWidth: 170 },
-  { field: 'transactionType', headerName: 'Transaction Type', flex: 1, minWidth: 130 },
-  { field: 'quantity', headerName: 'Quantity', flex: 1, minWidth: 75 },
-  { field: 'pricePerShare', headerName: 'Price per Share', flex: 1, minWidth: 120 },
-  { field: 'totalValue', headerName: 'Total Transaction Value', flex: 1, minWidth: 170 },
-  { field: 'dateTime', headerName: 'Date and Time', flex: 1, minWidth: 140 },
+  { field: 'noofshares', headerName: 'Quantity', flex: 1, minWidth: 75 },
+  { field: 'avgpurchaseprice', headerName: 'Avg Purchase Price', flex: 1, minWidth: 120 },
+  { field: 'currentstockprice', headerName: 'Current Stock Price', flex: 1, minWidth: 130 },
+  { field: 'percentage', headerName: 'Gain/Loss Percentage', flex: 1, minWidth: 170 },
+  { field: 'totalportfoliovalue', headerName: 'Total Portfolio Value', flex: 1, minWidth: 140 },
 ];
 
 const rows = [

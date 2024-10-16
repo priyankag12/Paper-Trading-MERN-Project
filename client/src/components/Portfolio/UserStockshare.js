@@ -13,33 +13,33 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 
 
 const data = [
-  { label: 'India', value: 50000 },
-  { label: 'USA', value: 35000 },
-  { label: 'Brazil', value: 10000 },
-  { label: 'Other', value: 5000 },
+  { label: 'Apple', value: 50000 },
+  { label: 'Nvidia', value: 35000 },
+  { label: 'Meta', value: 10000 },
+  { label: 'Amazon', value: 5000 },
 ];
 
 const countries = [
   {
-    name: 'India',
+    name: 'Apple',
     value: 50,
     
     color: 'hsl(220, 25%, 65%)',
   },
   {
-    name: 'USA',
+    name: 'Nvidia',
     value: 35,
    
     color: 'hsl(220, 25%, 45%)',
   },
   {
-    name: 'Brazil',
+    name: 'Meta',
     value: 10,
     
     color: 'hsl(220, 25%, 30%)',
   },
   {
-    name: 'Other',
+    name: 'Amazon',
     value: 5,
     
     color: 'hsl(220, 25%, 20%)',
