@@ -1,4 +1,5 @@
 const Transaction = require("../models/transaction.js");
+const User = require("../models/user.js");
 
 exports.getTransactionHistory = async (req, res) => {
     try {
@@ -55,5 +56,46 @@ exports.getStockBalance = async (req, res) => {
             message: "Error fetching stock summary",
             error: error.message,
         });
+    }
+};
+
+exports.addTransaction = async (req, res) => {
+    try {
+        const { _id: userId } = req.user;
+        const { transactionType, quantity, pricePerShare } = req.body;
+
+        const totalTransactionValue = quantity * pricePerShare;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if (transactionType === "Buy") {
+            if (user.balance < totalTransactionValue) {
+                return res.status(400).json({
+                    message: "Insufficient balance for this transaction",
+                });
+            }
+            user.balance -= totalTransactionValue;
+        } else if (transactionType === "Sell") {
+            user.balance += totalTransactionValue;
+        } else {
+            return res
+                .status(400)
+                .json({ message: "Invalid transaction type" });
+        }
+
+        await user.save();
+
+        const query = {
+            userId: userId,
+            ...req.body,
+        };
+        const transaction = await Transaction.create(query);
+
+        res.status(200).json({ transaction, updatedBalance: user.balance });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
