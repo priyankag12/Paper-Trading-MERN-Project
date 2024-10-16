@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter a username"],
         unique: true,
     },
+    balance: {
+        type: Number,
+        required: [true, "Balance  not specified"],
+    },
     email: {
         type: String,
         required: [true, "Please enter an email"],
@@ -31,6 +35,5 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter a password"],
     },
 });
-
 
 module.exports = mongoose.model("User", userSchema);
