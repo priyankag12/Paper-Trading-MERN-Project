@@ -16,7 +16,7 @@ const TickerSearch = ({ onSelectStock }) => {
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState([]);
 
-    const API_KEY = "";
+    const apiKey = process.env.REACT_APP_API_KEY;
 
     const fetchTickers = async () => {
         setLoading(true);
@@ -27,7 +27,7 @@ const TickerSearch = ({ onSelectStock }) => {
                     params: {
                         function: "SYMBOL_SEARCH",
                         keywords: inputValue,
-                        apikey: API_KEY,
+                        apikey: apiKey,
                     },
                 }
             );
