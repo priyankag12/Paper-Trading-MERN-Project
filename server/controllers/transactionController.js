@@ -1,11 +1,16 @@
 const Transaction = require("../models/transaction.js");
 const User = require("../models/user.js");
+const { format } = require('date-fns');
 
 exports.getTransactionHistory = async (req, res) => {
     try {
-        const transactions = await Transaction.find({ userId: req.user._id });
+        const transactions = await Transaction.find({ userId: req.user._id }).sort({ dateTime: -1 });
+        const formattedTransactions = transactions.map(transaction => ({
+            ...transaction._doc,
+            dateTime: format(transaction.dateTime, 'yyyy-MM-dd, HH:mm:ss'), 
+        }));
 
-        res.status(200).json({ transactions });
+        res.status(200).json({ transactions: formattedTransactions });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

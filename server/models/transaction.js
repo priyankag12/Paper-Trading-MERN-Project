@@ -7,8 +7,8 @@ const transactionSchema = new mongoose.Schema({
         required: true,
     },
     transactionId: {
-        type: String, 
-        unique: true, 
+        type: String,
+        unique: true,
     },
     stockName: {
         type: String,
@@ -48,15 +48,13 @@ const generateRandomString = (length) => {
 transactionSchema.pre('save', async function (next) {
     let unique = false;
     while (!unique) {
-        const shortTimestamp = Date.now().toString().slice(-6); 
-        const randomString = generateRandomString(4); 
-        this.transactionId = `TXN${shortTimestamp}${randomString}`; 
+        const shortTimestamp = Date.now().toString().slice(-6);
+        const randomString = generateRandomString(4);
+        this.transactionId = `TXN${shortTimestamp}${randomString}`;
 
         const existingTransaction = await mongoose.model("Transaction").findOne({ transactionId: this.transactionId });
-        unique = !existingTransaction; 
+        unique = !existingTransaction;
     }
-    
-    this.totalTransactionValue = this.quantity * this.pricePerShare;
 
     next();
 });
