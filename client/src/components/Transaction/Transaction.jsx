@@ -30,7 +30,7 @@ const columns = [
     flex: 1,
     minWidth: 170,
   },
-  { field: "dateTime", headerName: "Date and Time", flex: 1, minWidth: 140 },
+  { field: "dateTime", headerName: "Date and Time", flex: 1, minWidth: 140},
 ];
 
 export default function Transaction() {
