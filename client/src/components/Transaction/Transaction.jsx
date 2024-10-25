@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
 import apiClient from "../../services/apiClient";
+import { getTransactions } from "../../api/transactionApi";
 
 const columns = [
   {
@@ -41,13 +42,12 @@ export default function Transaction() {
     const fetchTransactions = async () => {
       try {
         setIsLoading(true);
-        const response = await apiClient.get("/dashboard/transaction-history");
-        setTransactions(response.data.transactions); 
+        const data = await getTransactions(); 
+        if (data) {
+          setTransactions(data.transactions); 
+        }
       } catch (error) {
-        console.error(
-          "Error fetching transactions:",
-          error.response?.data?.message || error.message
-        );
+        console.error("Error fetching transactions:", error.message);
       } finally {
         setIsLoading(false);
       }

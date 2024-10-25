@@ -7,5 +7,6 @@ export const getTransactions = async () => {
     return response.data; 
   } catch (error) {
     console.error('Error fetching transactions:', error.response?.data?.message || error.message);
+    throw error;
   }
 };
