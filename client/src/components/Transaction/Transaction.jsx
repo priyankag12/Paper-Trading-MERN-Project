@@ -1,36 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
-import apiClient from "../../services/apiClient";
 import { getTransactions } from "../../api/transactionApi";
+import { motion } from "framer-motion";
 
 const columns = [
-    {
-        field: "transactionId",
-        headerName: "Transaction ID",
-        flex: 1,
-        minWidth: 110,
-    },
+    { field: "transactionId", headerName: "Transaction ID", flex: 1, minWidth: 110 },
     { field: "stockName", headerName: "Stock Name", flex: 1, minWidth: 170 },
-    {
-        field: "transactionType",
-        headerName: "Transaction Type",
-        flex: 1,
-        minWidth: 130,
-    },
+    { field: "transactionType", headerName: "Transaction Type", flex: 1, minWidth: 130 },
     { field: "quantity", headerName: "Quantity", flex: 1, minWidth: 75 },
-    {
-        field: "pricePerShare",
-        headerName: "Price per Share",
-        flex: 1,
-        minWidth: 120,
-    },
-    {
-        field: "totalTransactionValue",
-        headerName: "Total Transaction Value",
-        flex: 1,
-        minWidth: 170,
-    },
+    { field: "pricePerShare", headerName: "Price per Share", flex: 1, minWidth: 120 },
+    { field: "totalValue", headerName: "Total Transaction Value", flex: 1, minWidth: 170 },
     { field: "dateTime", headerName: "Date and Time", flex: 1, minWidth: 140 },
 ];
 
