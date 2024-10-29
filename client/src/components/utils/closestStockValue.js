@@ -1,14 +1,21 @@
 export const closestStockValue = async (symbol) => {
     try {
+        console.log(
+            "Closes stock value api key: ",
+            process.end.REACT_APP_API_KEY
+        );
+
         const response = await fetch(
-            `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${process.env.REACT_APP_API_KEY}`
+            `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${process.end.REACT_APP_API_KEY}`
         );
 
         const data = await response.json();
 
+        console.log("CLOSEST STOCK VALUE RESPONSE", data);
+
         if (!data["Time Series (5min)"]) {
             // If the stock data is not available, return an error message
-            return { message: "Stock data not available." };
+            return { message: "Stock market closed" };
         }
 
         const currentTime = new Date();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TickerSearch from "./tickerSearch";
+import TickerSearch from "./TickerSearch";
 import axios from "axios";
 import {
     Button,
@@ -13,8 +13,8 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { getToken } from "../auth";
-import { closestStockValue } from "./utils/closestStockValue";
+import { getToken } from "../../auth";
+import { closestStockValue } from "../utils/closestStockValue";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
