@@ -10,7 +10,7 @@ const columns = [
   { field: "transactionType", headerName: "Transaction Type", flex: 1, minWidth: 130 },
   { field: "quantity", headerName: "Quantity", flex: 1, minWidth: 75 },
   { field: "pricePerShare", headerName: "Price per Share", flex: 1, minWidth: 120 },
-  { field: "totalValue", headerName: "Total Transaction Value", flex: 1, minWidth: 170 },
+  { field: "totalTransactionValue", headerName: "Total Transaction Value", flex: 1, minWidth: 170 },
   { field: "dateTime", headerName: "Date and Time", flex: 1, minWidth: 140 },
 ];
 
