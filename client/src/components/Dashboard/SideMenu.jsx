@@ -116,7 +116,7 @@ export default function SideMenu() {
               {userInfo ? userInfo.name : 'Guest'} 
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              {userInfo ? userInfo.email : ''} 
+              {userInfo ? userInfo.email : ''}
             </Typography>
           </Box>
           <OptionsMenu />

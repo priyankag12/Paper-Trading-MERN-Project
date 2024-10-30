@@ -84,6 +84,7 @@ export default function SignIn(props) {
             const resp = await loginUser(input);
             const token = resp.token; 
 
+            console.log(resp.user)
             if (token) {
                 storeToken(token); 
                 storeUserInfo(resp.user);
