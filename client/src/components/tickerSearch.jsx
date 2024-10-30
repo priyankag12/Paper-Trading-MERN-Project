@@ -7,9 +7,11 @@ import {
     ListItem,
     ListItemText,
     Stack,
+    Box,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import SearchIcon from "@mui/icons-material/Search";
 
 const TickerSearch = ({ onSelectStock }) => {
     const [inputValue, setInputValue] = useState("");
@@ -50,81 +52,142 @@ const TickerSearch = ({ onSelectStock }) => {
     };
 
     return (
-        <div>
-            <Stack
-                direction="row"
+        <div
+            style={{
+                backgroundColor: "#F9F7F7",
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Box
                 sx={{
-                    p: 2,
-                    gap: 1,
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderTop: "1px solid",
-                    borderColor: "divider",
-                    mt: "auto",
+                    backgroundColor: "#ffffff",
+                    padding: "40px",
+                    borderRadius: "10px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    maxWidth: "600px",
                     width: "100%",
+                    textAlign: "center",
                 }}
             >
-                <TextField
-                    label="Enter Ticker Search Query"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={fetchTickers}
-                    disabled={loading || !inputValue}
+                {/* Title and Description */}
+                <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{ color: "#112D4E", fontWeight: "bold" }}
                 >
-                    {loading ? (
-                        <CircularProgress color="inherit" size={20} />
-                    ) : (
-                        "Search"
-                    )}
-                </Button>
-            </Stack>
+                    Stock Ticker Search
+                </Typography>
+                <Typography
+                    variant="body1"
+                    gutterBottom
+                    sx={{
+                        color: "#112D4E",
+                        opacity: 0.7,
+                        marginBottom: "20px",
+                    }}
+                >
+                    Search for stock symbols and get real-time market data.
+                </Typography>
 
-            {options.length > 0 && (
-                <List>
-                    {options.map((option, index) => (
-                        <ListItem
-                            button
-                            key={index}
-                            onClick={() => handleSelect(option)}
-                        >
-                            <Stack
-                                direction="row"
+                {/* Search Section */}
+                <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                        mb: 3,
+                        alignItems: "center",
+                        backgroundColor: "#DBE2EF",
+                        borderRadius: "8px",
+                        padding: "10px 15px",
+                    }}
+                >
+                    <TextField
+                        label="Enter Stock Symbol or Name"
+                        placeholder="e.g. AAPL, Tesla"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        fullWidth
+                        sx={{
+                            backgroundColor: "#F9F7F7",
+                            borderRadius: "8px",
+                        }}
+                    />
+                    <Button
+                        variant="contained"
+                        onClick={fetchTickers}
+                        disabled={loading || !inputValue}
+                        sx={{
+                            backgroundColor: "#3F72AF",
+                            color: "#fff",
+                            textTransform: "none",
+                            padding: "10px 20px",
+                            "&:hover": {
+                                backgroundColor: "#2C598E",
+                            },
+                        }}
+                        startIcon={<SearchIcon />}
+                    >
+                        {loading ? (
+                            <CircularProgress color="inherit" size={24} />
+                        ) : (
+                            "Search"
+                        )}
+                    </Button>
+                </Stack>
+
+                {/* Search Results */}
+                {options.length > 0 && (
+                    <List>
+                        {options.map((option, index) => (
+                            <ListItem
+                                button
+                                key={index}
+                                onClick={() => handleSelect(option)}
                                 sx={{
-                                    p: 2,
-                                    gap: 10,
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    borderTop: "1px solid",
-                                    borderColor: "divider",
-                                    mt: "auto",
-                                    width: "100%",
+                                    backgroundColor: "#F9F7F7",
+                                    borderRadius: "8px",
+                                    mb: 2,
+                                    padding: "10px 20px",
+                                    transition: "background-color 0.3s ease",
+                                    "&:hover": {
+                                        backgroundColor: "#DBE2EF",
+                                    },
+                                    boxShadow:
+                                        "0px 2px 8px rgba(0, 0, 0, 0.05)",
                                 }}
                             >
                                 <ListItemText
                                     primary={
                                         <Typography
-                                            variant="body1"
-                                            style={{ fontWeight: "bold" }}
+                                            variant="h6"
+                                            style={{
+                                                fontWeight: "600",
+                                                color: "#112D4E",
+                                            }}
                                         >
                                             {`${option.symbol}`}
                                         </Typography>
                                     }
+                                    secondary={
+                                        <Typography
+                                            variant="body2"
+                                            style={{
+                                                color: "#112D4E",
+                                                opacity: 0.7,
+                                            }}
+                                        >
+                                            {`${option.name}`}
+                                        </Typography>
+                                    }
                                 />
-                                <ListItemText
-                                    primary={`${option.name}`}
-                                    sx={{
-                                        width: "100%",
-                                    }}
-                                />
-                            </Stack>
-                        </ListItem>
-                    ))}
-                </List>
-            )}
+                            </ListItem>
+                        ))}
+                    </List>
+                )}
+            </Box>
         </div>
     );
 };

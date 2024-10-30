@@ -1,11 +1,19 @@
 const Transaction = require("../models/transaction.js");
 const User = require("../models/user.js");
+const { format } = require("date-fns");
 
 exports.getTransactionHistory = async (req, res) => {
     try {
-        const transactions = await Transaction.find({ userId: req.user._id });
+        const transactions = await Transaction.find({
+            userId: req.user._id,
+        }).sort({ dateTime: -1 });
 
-        res.status(200).json({ transactions });
+        const formattedTransactions = transactions.map((transaction) => ({
+            ...transaction._doc,
+            dateTime: format(transaction.dateTime, "yyyy-MM-dd, HH:mm:ss"),
+        }));
+
+        res.status(200).json({ transactions: formattedTransactions });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -29,8 +37,8 @@ exports.getStockBalance = async (req, res) => {
             .lean();
 
         if (transactions.length === 0) {
-            return res.status(404).json({
-                message: `No transactions found for stock: ${ticker}`,
+            return res.status(200).json({
+                message: `You do not own this stock`,
             });
         }
 
@@ -91,6 +99,7 @@ exports.addTransaction = async (req, res) => {
         const query = {
             userId: userId,
             ...req.body,
+            totalTransactionValue: totalTransactionValue,
         };
         const transaction = await Transaction.create(query);
 
