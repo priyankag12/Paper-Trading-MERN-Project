@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     balance: {
         type: Number,
         required: [true, "Balance  not specified"],
+        default: 10000,
+    },
+    points: {
+        type: Number,
+        default: 0, 
     },
     email: {
         type: String,

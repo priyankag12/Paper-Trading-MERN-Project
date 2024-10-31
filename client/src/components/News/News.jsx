@@ -29,7 +29,7 @@ const News = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Latest News
       </Typography>
       {loading ? (
