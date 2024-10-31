@@ -1,14 +1,14 @@
 import apiClient from "../services/apiClient";
 
 export const registerUser = async (userData) => {
-  try {
-    const response = await apiClient.post("/auth/register", userData);
-    const { token, user } = response.data;
-    console.log(token);
-    return { token, user };
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Registration failed");
-  }
+
+    try {
+        const response = await apiClient.post("/auth/register", userData);
+        const { token, user } = response.data;
+        return { token, user };
+    } catch (error) {
+        throw new Error(error.response?.data?.message || "Registration failed");
+    }
 };
 
 export const loginUser = async (data) => {

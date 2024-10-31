@@ -22,6 +22,7 @@ const TickerSearch = ({ onSelectStock }) => {
 
     const fetchTickers = async () => {
         setLoading(true);
+        console.log(apiKey);
         try {
             const response = await axios.get(
                 `https://www.alphavantage.co/query`,
@@ -34,6 +35,8 @@ const TickerSearch = ({ onSelectStock }) => {
                 }
             );
             const results = response.data.bestMatches || [];
+            console.log(response.data);
+
             const tickers = results.map((item) => ({
                 symbol: item["1. symbol"],
                 name: item["2. name"],
@@ -72,7 +75,6 @@ const TickerSearch = ({ onSelectStock }) => {
                     textAlign: "center",
                 }}
             >
-                {/* Title and Description */}
                 <Typography
                     variant="h4"
                     gutterBottom
@@ -92,7 +94,6 @@ const TickerSearch = ({ onSelectStock }) => {
                     Search for stock symbols and get real-time market data.
                 </Typography>
 
-                {/* Search Section */}
                 <Stack
                     direction="row"
                     spacing={2}
@@ -138,54 +139,56 @@ const TickerSearch = ({ onSelectStock }) => {
                     </Button>
                 </Stack>
 
-                {/* Search Results */}
                 {options.length > 0 && (
-                    <List>
-                        {options.map((option, index) => (
-                            <ListItem
-                                button
-                                key={index}
-                                onClick={() => handleSelect(option)}
-                                sx={{
-                                    backgroundColor: "#F9F7F7",
-                                    borderRadius: "8px",
-                                    mb: 2,
-                                    padding: "10px 20px",
-                                    transition: "background-color 0.3s ease",
-                                    "&:hover": {
-                                        backgroundColor: "#DBE2EF",
-                                    },
-                                    boxShadow:
-                                        "0px 2px 8px rgba(0, 0, 0, 0.05)",
-                                }}
-                            >
-                                <ListItemText
-                                    primary={
-                                        <Typography
-                                            variant="h6"
-                                            style={{
-                                                fontWeight: "600",
-                                                color: "#112D4E",
-                                            }}
-                                        >
-                                            {`${option.symbol}`}
-                                        </Typography>
-                                    }
-                                    secondary={
-                                        <Typography
-                                            variant="body2"
-                                            style={{
-                                                color: "#112D4E",
-                                                opacity: 0.7,
-                                            }}
-                                        >
-                                            {`${option.name}`}
-                                        </Typography>
-                                    }
-                                />
-                            </ListItem>
-                        ))}
-                    </List>
+                    <>
+                        <List>
+                            {options.map((option, index) => (
+                                <ListItem
+                                    button
+                                    key={index}
+                                    onClick={(event) => handleSelect(option)}
+                                    sx={{
+                                        backgroundColor: "#F9F7F7",
+                                        borderRadius: "8px",
+                                        mb: 2,
+                                        padding: "10px 20px",
+                                        transition:
+                                            "background-color 0.3s ease",
+                                        "&:hover": {
+                                            backgroundColor: "#DBE2EF",
+                                        },
+                                        boxShadow:
+                                            "0px 2px 8px rgba(0, 0, 0, 0.05)",
+                                    }}
+                                >
+                                    <ListItemText
+                                        primary={
+                                            <Typography
+                                                variant="h6"
+                                                style={{
+                                                    fontWeight: "600",
+                                                    color: "#112D4E",
+                                                }}
+                                            >
+                                                {`${option.symbol}`}
+                                            </Typography>
+                                        }
+                                        secondary={
+                                            <Typography
+                                                variant="body2"
+                                                style={{
+                                                    color: "#112D4E",
+                                                    opacity: 0.7,
+                                                }}
+                                            >
+                                                {`${option.name}`}
+                                            </Typography>
+                                        }
+                                    />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </>
                 )}
             </Box>
         </div>
