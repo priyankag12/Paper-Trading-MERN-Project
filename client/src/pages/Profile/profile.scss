@@ -1,0 +1,142 @@
+.profile-container {
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  flex-direction: column;
+  background-image: url("../../../public/profileBackground2.jpg");
+  background-size: cover;
+  gap: 2rem;
+  height: 100vh;
+  // background-color: grey;
+  color: white;
+
+  .top-container {
+    // background-color: aquamarine;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    .top-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      // background-color: aliceblue;
+
+      .profile-card {
+        display: flex;
+        width: 20rem;
+        border: solid 2.5px;
+        border-radius: 2rem;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+    }
+
+    .top-bottom {
+
+      .buttons {
+        display: flex;
+        gap: 2rem;
+      }
+      h1 {
+        font-size: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 0;
+      }
+
+      p {
+        font-size: 1.5rem;
+        width: 40rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .bottom-container {
+    flex: 2;
+    // background-color: antiquewhite;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    gap: 2rem;
+
+    .profile-left {
+      flex: 2;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 2rem;
+      padding: 1rem;
+
+      .card {
+        height: 10vh ;
+        font-size: 1rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 1rem;
+        background: #1d1d1d;
+        box-shadow: 15px 15px 30px rgb(25, 25, 25),
+          -15px -15px 30px rgb(60, 60, 60);
+        position: relative;
+
+        .fieldHead {
+          position: absolute;
+          top: -0.8rem;
+          left: 1rem;
+        }
+      }
+
+      .normal {
+        flex-basis: calc(50% - 1rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .aboutme {
+        flex-basis: calc(100% - 0rem);
+      }
+    }
+
+    .profile-right {
+      flex: 1;
+      height: inherit;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      position: relative;
+
+      .avatar-container {
+        height: 8rem;
+        width: 8rem;
+        border-radius: 50%;
+        background-color: beige;
+        position: absolute;
+        // top: -13%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        overflow: hidden;
+
+        img {
+          height:100%;
+          width: 100%;
+          z-index: 10;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}

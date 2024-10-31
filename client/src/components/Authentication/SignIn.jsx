@@ -69,35 +69,36 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!validateInputs()) {
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    const input = {
-      email: data.get("email"),
-      password: data.get("password"),
-    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!validateInputs()) {
+            return;
+        }
+        const data = new FormData(event.currentTarget);
+        const input = {
+            email: data.get("email"),
+            password: data.get("password"),
+        };
+        
+        try {
+            const resp = await loginUser(input);
+            const token = resp.token; 
 
-    try {
-      const resp = await loginUser(input);
-      const token = resp.token;
-      console.log(resp.user);
-      if (token) {
-        storeToken(token);
-        storeUserInfo(resp.user);
-        dispatch(setUser(resp.user));
-        navigate("/dashboard/home");
-      } else {
-        setAuthError("No token received from the server");
-      }
-      console.log(resp);
-    } catch (error) {
-      setAuthError(error.message);
-      alert(error);
-    }
-  };
+            console.log(resp.user)
+            if (token) {
+                storeToken(token); 
+                storeUserInfo(resp.user);
+                dispatch(setUser(resp.user)); 
+                navigate("/dashboard/home");
+            } else {
+                setAuthError('No token received from the server'); 
+            }
+            console.log(resp); 
+        } catch (error) {
+            setAuthError(error.message); 
+            alert(error);
+        }
+    };
 
   const validateInputs = () => {
     const email = document.getElementById("email");
