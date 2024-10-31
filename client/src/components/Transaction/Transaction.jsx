@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
-import apiClient from "../../services/apiClient";
 import { motion } from "framer-motion";
+import { getTransactions } from "../../api/transactionApi";
 
 const columns = [
   { field: "transactionId", headerName: "Transaction ID", flex: 1, minWidth: 110 },
@@ -22,8 +22,8 @@ export default function Transaction() {
     const fetchTransactions = async () => {
       try {
         setIsLoading(true);
-        const response = await apiClient.get("/dashboard/transaction-history");
-        setTransactions(response.data.transactions); 
+        const response = await getTransactions();
+        setTransactions(response.data.transactions || []); 
       } catch (error) {
         console.error("Error fetching transactions:", error.response?.data?.message || error.message);
       } finally {
@@ -42,8 +42,7 @@ export default function Transaction() {
       transition={{ duration: 0.5 }}
     >
       <Typography
-        variant="h4"
-        fontWeight="bold"
+        variant="h3"
         gutterBottom
         sx={{ mb: 2, textAlign: "center" }}
       >

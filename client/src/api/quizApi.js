@@ -1,5 +1,5 @@
-// src/api/quizService.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import apiClient from "../services/apiClient";
 
 export const fetchQuizQuestions = async () => {
   const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
@@ -34,5 +34,29 @@ export const fetchQuizQuestions = async () => {
   } catch (error) {
     console.error("Error fetching quiz questions:", error);
     throw new Error("Failed to fetch quiz questions");
+  }
+};
+
+export const convertPoints = async(points) => {
+  const conversionData = {
+    pointsToConvert : points
+  }
+  try{
+    const response = await apiClient.put('/quiz/convert-points', conversionData);
+    console.log("Conversion successful!");
+    return response;
+  }catch(error){
+    console.error("Error while converting points: ", error);
+  }
+}
+
+export const fetchLeaderBoard = async () => {
+  try {
+    const response = await apiClient.get("/quiz/leaderboard");
+    console.log("Leaderboard retrieval successful!", response);
+    return response;
+  } catch (error) {
+    console.error("Error while retrieving leaderboard: ", error);
+    throw error; 
   }
 };

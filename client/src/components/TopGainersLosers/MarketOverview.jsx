@@ -27,7 +27,7 @@ const MarketOverview = () => {
 
   return (
     <Box sx={{ margin: 2, mb: 4 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h3">
         Market Overview
       </Typography>
       {loading ? (
