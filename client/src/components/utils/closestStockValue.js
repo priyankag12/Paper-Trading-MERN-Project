@@ -2,11 +2,11 @@ export const closestStockValue = async (symbol) => {
     try {
         console.log(
             "Closes stock value api key: ",
-            process.end.REACT_APP_API_KEY
+            process.env.REACT_APP_API_KEY
         );
 
         const response = await fetch(
-            `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${process.end.REACT_APP_API_KEY}`
+            `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${process.env.REACT_APP_API_KEY}`
         );
 
         const data = await response.json();
@@ -41,6 +41,8 @@ export const closestStockValue = async (symbol) => {
         }
 
         // Return the matching stock data or a message if the market is closed
+        console.log("THIS IS RETURNING", matchFound.data);
+
         return matchFound
             ? matchFound.data
             : { message: "Stock market is closed." };
