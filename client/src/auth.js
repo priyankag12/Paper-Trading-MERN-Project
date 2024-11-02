@@ -18,7 +18,6 @@ export const storeUserInfo = (userInfo) => {
 
 export const getUserInfo = () => {
   const userInfo = Cookies.get("userInfo");
-  console.log(JSON.parse(userInfo));
   return userInfo ? JSON.parse(userInfo) : null; 
 };
 
