@@ -26,9 +26,19 @@ const fetchGainersAndLosers = async () => {
 
   try {
     const response = await axios.get(url);
-    return response.data;
+    const { top_gainers = [], top_losers = [], most_actively_traded = [] } = response.data || {};
+
+    if (!top_gainers.length && !top_losers.length) {
+      console.warn("No gainers or losers data available.");
+    }
+
+    return {
+      top_gainers,
+      top_losers,
+      most_actively_traded
+    };
   } catch (error) {
-    console.error("Error fetching gainers and losers:", error);
+    console.error("Error fetching gainers and losers:", error.message);
     throw new Error("Failed to fetch gainers and losers data");
   }
 };
