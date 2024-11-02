@@ -123,7 +123,7 @@ const EarnPoints = () => {
                       Your Points: {points !== null ? points : "Error fetching points"}
                     </Typography>
                     <Typography variant="h5" sx={{ p:1}}>
-                      Your Balance: {balance !== null ? balance : "Error fetching balance"}
+                      Your Balance: ${balance !== null ? balance : "Error fetching balance"}
                     </Typography>
                     <Typography variant="h5" sx={{ p:1}}>
                       Your Ranking: {ranking !== null ? ranking : "Error fetching ranking"}

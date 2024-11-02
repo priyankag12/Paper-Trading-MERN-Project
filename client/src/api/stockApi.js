@@ -17,7 +17,6 @@ export const getUserBalance = async () => {
     try {
         const response = await apiClient.get("/auth/profile");
         console.log("Get user balance data: ", response.data);
-
         return response.data;
     } catch (error) {
         console.log("Error fetching user balance:", error);

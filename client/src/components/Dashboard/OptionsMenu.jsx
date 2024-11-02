@@ -32,7 +32,7 @@ function OptionsMenu({ showBadge = false }) {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    navigate('/profile')
   }; 
 
   const handleLogout = () => {
@@ -40,7 +40,7 @@ function OptionsMenu({ showBadge = false }) {
     removeToken();
     removeUserInfo();
     dispatch(clearUser());
-    navigate('/');
+    navigate('/paper-lingo');
   };
 
   return (
@@ -81,7 +81,6 @@ function OptionsMenu({ showBadge = false }) {
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
         <Divider />
         <MenuItem
           onClick={handleLogout}

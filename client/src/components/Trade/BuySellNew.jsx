@@ -55,15 +55,20 @@ const BuySellNew = () => {
     useEffect(() => {
         if (selectedStock) {
             console.log("selected stock working");
-
             fetchStockDetails(selectedStock);
-            fetchStockValue(selectedStock);
         }
     }, [selectedStock, isOpen]);
 
     useEffect(() => {
         fetchUserBalance();
     }, [isOpen]);
+
+    useEffect(() => {
+        if (selectedStock) {
+            console.log("selected stock working");
+            fetchStockValue(selectedStock);
+        }
+    }, [selectedStock]);
 
     return (
         <div>
