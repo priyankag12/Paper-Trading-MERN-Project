@@ -95,3 +95,75 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getProfile = async (req, res) => {
+  try {
+    const { _id: userId } = req.user;
+    const user = await User.findById(userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      age: user.age,
+      balance: user.balance
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving user details!" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const { _id: userId } = req.user;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.name = req.body.name || user.name;
+    user.username = req.body.username || user.username;
+    user.age = req.body.age || user.age;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      user.password = await bcrypt.hash(req.body.password, 10);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        age: user.age
+      }
+    });
+  } catch (error) {
+    console.error("Update profile error:", error);
+    res.status(500).json({ message: "Error updating user details!" });
+  }
+};
+
+exports.deleteProfile = async (req, res) => {
+  try {
+    const { _id: userId } = req.user;
+    const user = await User.findByIdAndDelete(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Delete profile error:", error);
+    res.status(500).json({ message: "Error deleting user!" });
+  }
+};

@@ -32,22 +32,16 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />}>
                         <Route path="home" element={<Home />} />
                         <Route path="portfolio" element={<Portfolio />} />
-                        <Route
-                            path="transaction-history"
-                            element={<TransactionHistory />}
-                        />
+                        <Route path="transaction-history" element={<TransactionHistory />} />
                         <Route path="earn-points" element={<EarnPoints />} />
                         <Route path="leaderboard" element={<LeaderBoard />} />
                         <Route path="trade" element={<BuySellNew />} />
+                        
                     </Route>
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/paper-lingo" element={<LandingPage />} />
 
-                    <Route
-                        path="candle"
-                        element={<CandleStickGraph symbol="IBM" />}
-                    />
-                    <Route path="old" element={<BuySellStocks />} />
+                    <Route path="candle" element={<CandleStickGraph symbol="IBM" />} />
                 </Routes>
             </ThemeProvider>
         </Router>

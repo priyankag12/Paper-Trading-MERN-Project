@@ -13,14 +13,12 @@ export const removeToken = () => {
 };
 
 export const storeUserInfo = (userInfo) => {
-  Cookies.set("userInfo", JSON.stringify(userInfo), { expires: 1 }); // Expires in 7 days
+  Cookies.set("userInfo", JSON.stringify(userInfo), { expires: 1 }); 
 };
 
 export const getUserInfo = () => {
   const userInfo = Cookies.get("userInfo");
-  console.log( JSON.parse(userInfo)
-  );
-  return userInfo ? JSON.parse(userInfo) : null; // Return parsed object or null if not found
+  return userInfo ? JSON.parse(userInfo) : null; 
 };
 
 export const removeUserInfo = () => {

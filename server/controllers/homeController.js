@@ -41,6 +41,9 @@ const getTopGainersLosers = async (req, res) => {
     if (!marketCache.data || isCacheExpired(marketCache.lastFetchTime, CACHE_EXPIRY_ONE_DAY)) {
         try {
             const data = await fetchGainersAndLosers();
+            if (!data || !data.top_gainers || !data.top_losers || !data.most_actively_traded) {
+                throw new Error("Incomplete data structure from API");
+            }
             marketCache = {
                 lastFetchTime: Date.now(),
                 data
@@ -51,19 +54,11 @@ const getTopGainersLosers = async (req, res) => {
         }
     }
 
-    if (marketCache.data) {
-        const topGainers = marketCache.data.top_gainers.slice(0, 5);
-        const topLosers = marketCache.data.top_losers.slice(0, 5);
-        const mostActive = marketCache.data.most_actively_traded.slice(0, 5);
-
-        res.json({
-            top_gainers: topGainers,
-            top_losers: topLosers,
-            most_actively_traded: mostActive
-        });
-    } else {
-        res.status(500).json({ error: "No market data available." });
-    }
+    res.json({
+        top_gainers: marketCache.data.top_gainers.slice(0, 5),
+        top_losers: marketCache.data.top_losers.slice(0, 5),
+        most_actively_traded: marketCache.data.most_actively_traded.slice(0, 5),
+    });
 };
 
 module.exports = { getNews, getTopGainersLosers };

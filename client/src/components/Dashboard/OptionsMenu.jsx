@@ -32,15 +32,19 @@ function OptionsMenu({ showBadge = false }) {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null); 
   }; 
 
+  const handleProfileClick = () => {
+    handleClose(); 
+    navigate('/profile'); 
+  };
+
   const handleLogout = () => {
-    handleClose();
     removeToken();
     removeUserInfo();
     dispatch(clearUser());
-    navigate('/');
+    navigate('/paper-lingo');
   };
 
   return (
@@ -65,7 +69,6 @@ function OptionsMenu({ showBadge = false }) {
         id="menu"
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         sx={{
@@ -80,8 +83,7 @@ function OptionsMenu({ showBadge = false }) {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleProfileClick}>Profile</MenuItem> 
         <Divider />
         <MenuItem
           onClick={handleLogout}
