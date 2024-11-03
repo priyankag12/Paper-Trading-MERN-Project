@@ -74,11 +74,11 @@ const BuySellNew = () => {
         <div>
             <TickerSearch onSelectStock={setSelectedStock} />
             {selectedStock && (
-                <div style={{ marginTop: "20px" }}>
-                    <h3>Selected Stock </h3>
-                    <p>
+                <Stack>
+                    <Typography variant="h6">Selected Stock</Typography>
+                    <Typography variant="body1">
                         {selectedStock.symbol} - {selectedStock.name}
-                    </p>
+                    </Typography>
                     <Typography variant="body1">
                         {loading ? (
                             <CircularProgress />
@@ -94,7 +94,7 @@ const BuySellNew = () => {
                                         : "You do not own this stock."}
                                 </Typography>
                                 <Typography>
-                                    Stock Price: ${stockPrice}
+                                    Stock Price: ${stockPrice.toFixed(2)}
                                 </Typography>
                                 <Stack
                                     direction="row"
@@ -108,8 +108,13 @@ const BuySellNew = () => {
                                             setTransactionType("Buy");
                                             setIsOpen(true);
                                         }}
+                                        disabled={loading}
                                     >
-                                        Buy
+                                        {loading ? (
+                                            <CircularProgress size={24} />
+                                        ) : (
+                                            "Buy"
+                                        )}
                                     </Button>
 
                                     {stockDetails.totalQuantity > 0 && (
@@ -120,15 +125,20 @@ const BuySellNew = () => {
                                                 setTransactionType("Sell");
                                                 setIsOpen(true);
                                             }}
+                                            disabled={loading}
                                         >
-                                            Sell
+                                            {loading ? (
+                                                <CircularProgress size={24} />
+                                            ) : (
+                                                "Sell"
+                                            )}
                                         </Button>
                                     )}
                                 </Stack>
                             </div>
                         ) : null}
                     </Typography>
-                </div>
+                </Stack>
             )}
             <Modal
                 open={isOpen}

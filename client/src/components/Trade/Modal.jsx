@@ -8,6 +8,7 @@ import {
     TextField,
     Typography,
     IconButton,
+    useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -22,11 +23,12 @@ export default function Modal({
     transactionType,
     availableQuantity,
 }) {
+    const theme = useTheme();
     const [quantity, setQuantity] = useState(1);
     const totalCost = quantity * stockPrice;
 
     useEffect(() => {
-        setQuantity(1); // Reset quantity when modal is opened for a new transaction
+        setQuantity(1);
     }, [open, transactionType]);
 
     const handleIncreaseQuantity = () => {
@@ -74,7 +76,7 @@ export default function Modal({
                 `${transactionType} transaction successful:`,
                 response.data
             );
-            onClose(); // Close the modal after the transaction
+            onClose();
         } catch (error) {
             console.error(
                 `Error adding ${transactionType} transaction:`,
@@ -84,20 +86,34 @@ export default function Modal({
     };
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>
+            <DialogTitle
+                sx={{
+                    backgroundColor: theme.palette.background.paper,
+                    color: theme.palette.text.primary,
+                    textAlign: "center",
+                    fontWeight: "bold",
+                }}
+            >
                 {transactionType} {selectedStock?.symbol}
             </DialogTitle>
-            <DialogContent>
-                <Typography>
+            <DialogContent
+                sx={{
+                    backgroundColor: theme.palette.background.default,
+                    padding: "24px",
+                }}
+            >
+                <Typography sx={{ color: theme.palette.text.secondary }}>
                     {transactionType === "Buy"
-                        ? `Available Balance: $${balance}`
+                        ? `Available Balance: $${balance.toFixed(2)}`
                         : `Available to Sell: ${availableQuantity} shares`}
                 </Typography>
-                <Typography>Stock Price: ${stockPrice}</Typography>
+                <Typography sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+                    Stock Price: ${stockPrice.toFixed(2)}
+                </Typography>
 
                 <Stack direction="row" spacing={1} alignItems="center">
                     <IconButton onClick={handleDecreaseQuantity}>
-                        <RemoveIcon />
+                        <RemoveIcon color="primary" />
                     </IconButton>
                     <TextField
                         value={quantity}
@@ -110,23 +126,40 @@ export default function Modal({
                                     : availableQuantity,
                             type: "number",
                         }}
+                        sx={{
+                            "& .MuiInputBase-root": {
+                                backgroundColor: theme.palette.background.paper,
+                                borderRadius: "8px",
+                            },
+                        }}
                     />
                     <IconButton onClick={handleIncreaseQuantity}>
-                        <AddIcon />
+                        <AddIcon color="primary" />
                     </IconButton>
                 </Stack>
 
                 <Typography>
                     Total {transactionType === "Buy" ? "Cost" : "Proceeds"}: $
-                    {totalCost}
+                    {totalCost.toFixed(2)}
                 </Typography>
 
                 <Stack
                     direction="row"
                     spacing={2}
-                    style={{ marginTop: "20px" }}
+                    sx={{ marginTop: "20px", justifyContent: "center" }}
                 >
-                    <Button onClick={onClose} color="secondary">
+                    <Button
+                        onClick={onClose}
+                        color="secondary"
+                        sx={{
+                            backgroundColor: theme.palette.primary.main,
+                            color: "#fff",
+                            textTransform: "none",
+                            "&:hover": {
+                                backgroundColor: theme.palette.primary.dark,
+                            },
+                        }}
+                    >
                         Cancel
                     </Button>
                     <Button
@@ -137,6 +170,14 @@ export default function Modal({
                                 ? totalCost > balance
                                 : quantity > availableQuantity
                         }
+                        sx={{
+                            backgroundColor: theme.palette.primary.main,
+                            color: "#fff",
+                            textTransform: "none",
+                            "&:hover": {
+                                backgroundColor: theme.palette.primary.dark,
+                            },
+                        }}
                     >
                         Confirm {transactionType}
                     </Button>

@@ -8,8 +8,9 @@ import {
     ListItemText,
     Stack,
     Box,
+    Typography,
+    useTheme,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -17,6 +18,7 @@ const TickerSearch = ({ onSelectStock }) => {
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState([]);
+    const theme = useTheme();
 
     const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -57,7 +59,7 @@ const TickerSearch = ({ onSelectStock }) => {
     return (
         <div
             style={{
-                backgroundColor: "#F9F7F7",
+                backgroundColor: theme.palette.background.default,
                 minHeight: "100vh",
                 display: "flex",
                 justifyContent: "center",
@@ -66,7 +68,7 @@ const TickerSearch = ({ onSelectStock }) => {
         >
             <Box
                 sx={{
-                    backgroundColor: "#ffffff",
+                    backgroundColor: theme.palette.background.paper,
                     padding: "40px",
                     borderRadius: "10px",
                     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
@@ -78,7 +80,10 @@ const TickerSearch = ({ onSelectStock }) => {
                 <Typography
                     variant="h4"
                     gutterBottom
-                    sx={{ color: "#112D4E", fontWeight: "bold" }}
+                    sx={{
+                        color: theme.palette.text.primary,
+                        fontWeight: "bold",
+                    }}
                 >
                     Stock Ticker Search
                 </Typography>
@@ -86,7 +91,7 @@ const TickerSearch = ({ onSelectStock }) => {
                     variant="body1"
                     gutterBottom
                     sx={{
-                        color: "#112D4E",
+                        color: theme.palette.text.secondary,
                         opacity: 0.7,
                         marginBottom: "20px",
                     }}
@@ -100,7 +105,7 @@ const TickerSearch = ({ onSelectStock }) => {
                     sx={{
                         mb: 3,
                         alignItems: "center",
-                        backgroundColor: "#DBE2EF",
+                        backgroundColor: theme.palette.action.hover,
                         borderRadius: "8px",
                         padding: "10px 15px",
                     }}
@@ -112,7 +117,7 @@ const TickerSearch = ({ onSelectStock }) => {
                         onChange={(e) => setInputValue(e.target.value)}
                         fullWidth
                         sx={{
-                            backgroundColor: "#F9F7F7",
+                            backgroundColor: theme.palette.background.default,
                             borderRadius: "8px",
                         }}
                     />
@@ -121,12 +126,12 @@ const TickerSearch = ({ onSelectStock }) => {
                         onClick={fetchTickers}
                         disabled={loading || !inputValue}
                         sx={{
-                            backgroundColor: "#3F72AF",
+                            backgroundColor: theme.palette.primary.main,
                             color: "#fff",
                             textTransform: "none",
                             padding: "10px 20px",
                             "&:hover": {
-                                backgroundColor: "#2C598E",
+                                backgroundColor: theme.palette.primary.dark,
                             },
                         }}
                         startIcon={<SearchIcon />}
@@ -146,16 +151,18 @@ const TickerSearch = ({ onSelectStock }) => {
                                 <ListItem
                                     button
                                     key={index}
-                                    onClick={(event) => handleSelect(option)}
+                                    onClick={() => handleSelect(option)}
                                     sx={{
-                                        backgroundColor: "#F9F7F7",
+                                        backgroundColor:
+                                            theme.palette.background.default,
                                         borderRadius: "8px",
                                         mb: 2,
                                         padding: "10px 20px",
                                         transition:
                                             "background-color 0.3s ease",
                                         "&:hover": {
-                                            backgroundColor: "#DBE2EF",
+                                            backgroundColor:
+                                                theme.palette.action.hover,
                                         },
                                         boxShadow:
                                             "0px 2px 8px rgba(0, 0, 0, 0.05)",
@@ -167,7 +174,8 @@ const TickerSearch = ({ onSelectStock }) => {
                                                 variant="h6"
                                                 style={{
                                                     fontWeight: "600",
-                                                    color: "#112D4E",
+                                                    color: theme.palette.text
+                                                        .primary,
                                                 }}
                                             >
                                                 {`${option.symbol}`}
@@ -177,7 +185,8 @@ const TickerSearch = ({ onSelectStock }) => {
                                             <Typography
                                                 variant="body2"
                                                 style={{
-                                                    color: "#112D4E",
+                                                    color: theme.palette.text
+                                                        .secondary,
                                                     opacity: 0.7,
                                                 }}
                                             >
