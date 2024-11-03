@@ -57,7 +57,7 @@ const TickerSearch = ({ onSelectStock }) => {
     };
 
     return (
-        <div
+        <Stack
             style={{
                 backgroundColor: theme.palette.background.default,
                 minHeight: "100vh",
@@ -126,12 +126,12 @@ const TickerSearch = ({ onSelectStock }) => {
                         onClick={fetchTickers}
                         disabled={loading || !inputValue}
                         sx={{
-                            backgroundColor: theme.palette.primary.main,
+                            backgroundColor: theme.palette.success.main,
                             color: "#fff",
                             textTransform: "none",
                             padding: "10px 20px",
                             "&:hover": {
-                                backgroundColor: theme.palette.primary.dark,
+                                backgroundColor: theme.palette.success.dark,
                             },
                         }}
                         startIcon={<SearchIcon />}
@@ -200,7 +200,7 @@ const TickerSearch = ({ onSelectStock }) => {
                     </>
                 )}
             </Box>
-        </div>
+        </Stack>
     );
 };
 

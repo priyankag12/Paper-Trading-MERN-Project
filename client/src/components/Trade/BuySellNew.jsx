@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import TickerSearch from "./TickerSearch";
-import { Button, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+    Button,
+    CircularProgress,
+    Stack,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import { closestStockValue } from "../utils/closestStockValue";
 import Modal from "./Modal";
 import { getStockDetails, getUserBalance } from "../../api/stockApi";
 
 const BuySellNew = () => {
+    const theme = useTheme();
     const [selectedStock, setSelectedStock] = useState("");
     const [stockDetails, setStockDetails] = useState("");
     const [loading, setLoading] = useState(false);
@@ -71,29 +78,43 @@ const BuySellNew = () => {
     }, [selectedStock]);
 
     return (
-        <div>
+        <Stack spacing={2} sx={{ padding: "24px" }}>
             <TickerSearch onSelectStock={setSelectedStock} />
             {selectedStock && (
-                <Stack>
-                    <Typography variant="h6">Selected Stock</Typography>
-                    <Typography variant="body1">
+                <Stack spacing={1} sx={{ alignItems: "center" }}>
+                    <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+                        Selected Stock
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        sx={{ fontSize: "1.2rem", fontWeight: "500" }}
+                    >
                         {selectedStock.symbol} - {selectedStock.name}
                     </Typography>
-                    <Typography variant="body1">
+                    <Typography variant="body1" sx={{ fontSize: "1.2rem" }}>
                         {loading ? (
                             <CircularProgress />
                         ) : errorMessage ? (
-                            <Typography color="error">
+                            <Typography
+                                color="error"
+                                sx={{ fontSize: "1.2rem" }}
+                            >
                                 {errorMessage}
                             </Typography>
                         ) : stockDetails ? (
-                            <div>
-                                <Typography variant="body1">
+                            <Stack>
+                                <Typography
+                                    variant="body1"
+                                    sx={{
+                                        fontSize: "1.2rem",
+                                        fontWeight: "500",
+                                    }}
+                                >
                                     {stockDetails.totalQuantity > 0
                                         ? `Current Holdings: ${stockDetails.totalQuantity}`
                                         : "You do not own this stock."}
                                 </Typography>
-                                <Typography>
+                                <Typography sx={{ fontSize: "1.2rem" }}>
                                     Stock Price: ${stockPrice.toFixed(2)}
                                 </Typography>
                                 <Stack
@@ -103,12 +124,21 @@ const BuySellNew = () => {
                                 >
                                     <Button
                                         variant="contained"
-                                        color="primary"
+                                        color="success"
                                         onClick={() => {
                                             setTransactionType("Buy");
                                             setIsOpen(true);
                                         }}
                                         disabled={loading}
+                                        sx={{
+                                            fontSize: "1rem",
+                                            textTransform: "none",
+                                            padding: "8px 16px",
+                                            "&:hover": {
+                                                backgroundColor:
+                                                    theme.palette.success.dark,
+                                            },
+                                        }}
                                     >
                                         {loading ? (
                                             <CircularProgress size={24} />
@@ -120,12 +150,21 @@ const BuySellNew = () => {
                                     {stockDetails.totalQuantity > 0 && (
                                         <Button
                                             variant="contained"
-                                            color="secondary"
+                                            color="info"
                                             onClick={() => {
                                                 setTransactionType("Sell");
                                                 setIsOpen(true);
                                             }}
                                             disabled={loading}
+                                            sx={{
+                                                fontSize: "1rem",
+                                                textTransform: "none",
+                                                padding: "8px 16px",
+                                                "&:hover": {
+                                                    backgroundColor:
+                                                        theme.palette.info.dark,
+                                                },
+                                            }}
                                         >
                                             {loading ? (
                                                 <CircularProgress size={24} />
@@ -135,7 +174,7 @@ const BuySellNew = () => {
                                         </Button>
                                     )}
                                 </Stack>
-                            </div>
+                            </Stack>
                         ) : null}
                     </Typography>
                 </Stack>
@@ -149,7 +188,7 @@ const BuySellNew = () => {
                 transactionType={transactionType}
                 availableQuantity={stockDetails.totalQuantity}
             />
-        </div>
+        </Stack>
     );
 };
 

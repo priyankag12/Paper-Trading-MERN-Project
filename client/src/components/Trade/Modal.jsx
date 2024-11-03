@@ -85,13 +85,14 @@ export default function Modal({
         }
     };
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} maxWidth="xs">
             <DialogTitle
                 sx={{
                     backgroundColor: theme.palette.background.paper,
                     color: theme.palette.text.primary,
                     textAlign: "center",
                     fontWeight: "bold",
+                    fontSize: "1.5rem",
                 }}
             >
                 {transactionType} {selectedStock?.symbol}
@@ -100,14 +101,29 @@ export default function Modal({
                 sx={{
                     backgroundColor: theme.palette.background.default,
                     padding: "24px",
+                    width: "400px",
+                    height: "350px",
+                    alignItems: "center",
                 }}
             >
-                <Typography sx={{ color: theme.palette.text.secondary }}>
+                <Typography
+                    sx={{
+                        fontSize: "1.2rem",
+                        fontWeight: "500",
+                        marginBottom: "12px",
+                    }}
+                >
                     {transactionType === "Buy"
                         ? `Available Balance: $${balance.toFixed(2)}`
                         : `Available to Sell: ${availableQuantity} shares`}
                 </Typography>
-                <Typography sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+                <Typography
+                    sx={{
+                        fontSize: "1.2rem",
+                        fontWeight: "500",
+                        marginBottom: "24px",
+                    }}
+                >
                     Stock Price: ${stockPrice.toFixed(2)}
                 </Typography>
 
@@ -130,7 +146,9 @@ export default function Modal({
                             "& .MuiInputBase-root": {
                                 backgroundColor: theme.palette.background.paper,
                                 borderRadius: "8px",
+                                fontSize: "1.2rem",
                             },
+                            width: "80px",
                         }}
                     />
                     <IconButton onClick={handleIncreaseQuantity}>
@@ -138,7 +156,13 @@ export default function Modal({
                     </IconButton>
                 </Stack>
 
-                <Typography>
+                <Typography
+                    sx={{
+                        fontSize: "1.2rem",
+                        fontWeight: "500",
+                        marginTop: "16px",
+                    }}
+                >
                     Total {transactionType === "Buy" ? "Cost" : "Proceeds"}: $
                     {totalCost.toFixed(2)}
                 </Typography>
@@ -152,11 +176,12 @@ export default function Modal({
                         onClick={onClose}
                         color="secondary"
                         sx={{
-                            backgroundColor: theme.palette.primary.main,
+                            backgroundColor: theme.palette.error.main,
                             color: "#fff",
                             textTransform: "none",
+                            fontSize: "1rem",
                             "&:hover": {
-                                backgroundColor: theme.palette.primary.dark,
+                                backgroundColor: theme.palette.error.dark,
                             },
                         }}
                     >
@@ -171,11 +196,12 @@ export default function Modal({
                                 : quantity > availableQuantity
                         }
                         sx={{
-                            backgroundColor: theme.palette.primary.main,
+                            backgroundColor: theme.palette.success.main,
                             color: "#fff",
                             textTransform: "none",
+                            fontSize: "1rem",
                             "&:hover": {
-                                backgroundColor: theme.palette.primary.dark,
+                                backgroundColor: theme.palette.success.dark,
                             },
                         }}
                     >
