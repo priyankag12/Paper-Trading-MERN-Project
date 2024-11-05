@@ -1,10 +1,6 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography } from '@mui/material';
-import apiClient from '../../services/apiClient';
-
-
 
 const columns = [
   { field: 'stockName', headerName: 'Stock Name', flex: 1.5, minWidth: 170 },
@@ -15,32 +11,7 @@ const columns = [
   { field: 'totalPortfolioValue', headerName: 'Total Portfolio Value', flex: 1, minWidth: 140 },
 ];
 
-export default function PortfolioTable() {
-  const [rows, setRows] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the backend and populate the table
-    async function fetchPortfolioData() {
-      try {
-        const response = await apiClient.get('/portfolio/portfolio');
-        const portfolioData = response.data.map((item, index) => ({
-          id: index + 1,
-          stockName: item.stockName,
-          totalQuantity: item.totalQuantity,
-          avgPurchasePrice: item.avgPurchasePrice,
-          currentStockPrice: item.currentStockPrice,
-          gainLossPercentage: item.gainLossPercentage,
-          totalPortfolioValue: item.totalPortfolioValue,
-        }));
-        setRows(portfolioData);
-      } catch (error) {
-        console.error("Error fetching portfolio data:", error);
-      }
-    }
-
-    fetchPortfolioData();
-  }, []);
-
+export default function PortfolioTable({ rows }) {
   return (
     <Box sx={{ overflowX: 'auto', maxWidth: '100%' }}>
       <Typography
