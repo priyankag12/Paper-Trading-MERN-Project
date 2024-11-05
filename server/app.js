@@ -8,8 +8,11 @@ const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/authRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
+
+const portfolioRoutes = require('./routes/portfolioRoutes');
 const homeRoutes = require("./routes/homeRoutes");
 const quizRoutes = require('./routes/quizRoutes');
+
 
 // Middleware
 app.use(
@@ -24,8 +27,12 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", transactionRoutes);
+app.use("/api/portfolio", portfolioRoutes);
+
+
 app.use("/api/home", homeRoutes);
 app.use("/api/quiz", quizRoutes);
+
 
 const port = process.env.PORT || 8000;
 
