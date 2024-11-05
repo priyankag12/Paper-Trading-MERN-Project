@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography } from '@mui/material';
-import axios from 'axios';
 import apiClient from '../../services/apiClient';
 
 

@@ -3,17 +3,22 @@ import {
   Button,
   Typography,
   Box,
+  Container,
+  CircularProgress,
   Card,
   CardContent,
-  CircularProgress,
-  Container,
+  useTheme,
 } from "@mui/material";
 import QuizCard from "./QuizCard";
 import QuizRules from "./QuizRules";
-import apiClient from "../../services/apiClient";
-import { convertPoints, fetchQuizQuestions } from "../../api/quizApi";
+import {
+  convertPoints,
+  fetchQuizQuestions,
+  getUserDetails,
+} from "../../api/quizApi";
 import MiniLeaderBoard from "./MiniLeaderBoard";
 import { motion } from "framer-motion";
+import UserInfo from "./UserInfo";
 
 const EarnPoints = () => {
   const [score, setScore] = useState(0);
@@ -24,7 +29,8 @@ const EarnPoints = () => {
   const [points, setPoints] = useState(null);
   const [pointsLoading, setPointsLoading] = useState(true);
   const [balance, setBalance] = useState(0);
-  const [ranking, setRanking] = useState(null); 
+  const [ranking, setRanking] = useState(null);
+  const theme = useTheme();
 
   const startQuiz = async () => {
     setLoading(true);
@@ -45,18 +51,18 @@ const EarnPoints = () => {
       const pointsToConvert = score;
       await convertPoints(pointsToConvert);
       console.log("Points converted to balance successfully!");
-      await fetchUserPoints();
+      await fetchUserDetails();
     } catch (error) {
       console.error("Error converting points to balance:", error);
     }
   };
 
-  const fetchUserPoints = async () => {
+  const fetchUserDetails = async () => {
     setPointsLoading(true);
     try {
-      const response = await apiClient.get("/quiz/get-points");
+      const response = await getUserDetails();
       setPoints(response.data.points);
-      setBalance(response.data.balance); 
+      setBalance(Number(response.data.balance).toFixed(2));
       setRanking(response.data.userRank);
     } catch (error) {
       console.error("Error retrieving points:", error);
@@ -66,119 +72,138 @@ const EarnPoints = () => {
   };
 
   useEffect(() => {
-    fetchUserPoints();
+    fetchUserDetails();
   }, []);
 
   return (
     <motion.div
-    style={{ overflowX: "auto", maxWidth: "100%" }}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    <Container sx={{ display: "flex", justifyContent: "center" }}>
-      {!quizStarted ? (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: 3,
-            width: "100%",
-          }}
-        >
-          <Typography variant="h3" sx={{ marginBottom: 2 }}>
-            Welcome to the Stock Trading Quiz!
-          </Typography>
+      style={{ overflowX: "auto", maxWidth: "100%" }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
+        {!quizStarted ? (
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
+              flexDirection: "column",
+              justifyContent: "center",
               gap: 3,
+              width: "100%",
             }}
           >
-            <Box sx={{ minWidth: 600 }}>
-              <Card sx={{ padding: 1 }}>
-                <CardContent>
-                  <QuizRules />
-                  <Box
-                    sx={{ display: "flex", justifyContent: "center", mt: 2 }}
-                  >
-                    <Button variant="contained" onClick={startQuiz}>
-                      Start Quiz
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Box>
-            <Card sx={{ padding: 1, textAlign: "center", minWidth: 400 }}>
-              <Typography variant="h4" sx={{pt:3}}> Player Details</Typography>
-              <CardContent>
-                {pointsLoading ? (
-                  <CircularProgress />
-                ) : (
-                  <>
-                    <Typography variant="h5" sx={{ p:1}}>
-                      Your Points: {points !== null ? points : "Error fetching points"}
-                    </Typography>
-                    <Typography variant="h5" sx={{ p:1}}>
-                      Your Balance: ${balance !== null ? balance : "Error fetching balance"}
-                    </Typography>
-                    <Typography variant="h5" sx={{ p:1}}>
-                      Your Ranking: {ranking !== null ? ranking : "Error fetching ranking"}
-                    </Typography>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </Box>
-
-          <MiniLeaderBoard />
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            mt: 13,
-          }}
-        >
-          {loading ? (
-            <CircularProgress />
-          ) : showScore ? (
-            <Card sx={{ padding: 4, textAlign: "center" }}>
-              <Typography variant="h4">
-                You scored {score} out of {questions.length}
-              </Typography>
-              <Box sx={{ margin: 4 }}>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    setQuizStarted(false);
-                    setScore(0);
-                    setShowScore(false);
-                    setQuestions([]);
+            <Typography
+              variant="h3"
+              sx={{
+                marginBottom: 2,
+                textAlign: "center",
+              }}
+            >
+              Test Your Market Knowledge!
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                justifyContent: "space-around",
+                alignItems: "center",
+                gap: 3,
+              }}
+            >
+              <Box sx={{ width: { xs: "100%", md: 600 } }}>
+                <Card
+                  sx={{
+                    borderRadius: 4,
+                    padding: 2,
+                    border: `1px solid ${theme.palette.accent.main}`,
                   }}
                 >
-                  Play Again
-                </Button>
+                  <CardContent>
+                    <QuizRules />
+                    <Box
+                      sx={{ display: "flex", justifyContent: "center", mt: 2 }}
+                    >
+                      <Button
+                        variant="contained"
+                        onClick={startQuiz}
+                        sx={{
+                          backgroundColor: theme.palette.accent.main,
+                          color: theme.palette.primary.contrastText,
+                          fontWeight: "bold",
+                          paddingX: 3,
+                          paddingY: 1.5,
+                          borderRadius: 2,
+                          transition: "transform 0.5s ease",
+                          boxShadow: `0px 4px 10px 2px${theme.palette.accent.main}`,
+                          "&:hover": {
+                            transform: "translateY(-5px)",
+                            boxShadow: `0px 7px 12px 2px ${theme.palette.accent.main}`,
+                          },
+                        }}
+                      >
+                        Start Quiz
+                      </Button>
+                    </Box>
+                  </CardContent>
+                </Card>
               </Box>
-            </Card>
-          ) : (
-            <QuizCard
-              questions={questions}
-              score={score}
-              setScore={setScore}
-              setShowScore={handleQuizEnd}
-            />
-          )}
-        </Box>
-      )}
-    </Container>
+              <Box sx={{ width: { xs: "100%", md: 400 } }}>
+                <UserInfo
+                  points={points}
+                  balance={balance}
+                  ranking={ranking}
+                  pointsLoading={pointsLoading}
+                />
+              </Box>
+            </Box>
+
+            <MiniLeaderBoard />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              mt: 13,
+              padding: { xs: 2, md: 0 },
+            }}
+          >
+            {loading ? (
+              <CircularProgress />
+            ) : showScore ? (
+              <Card sx={{ padding: 4, textAlign: "center" }}>
+                <Typography variant="h4">
+                  You scored {score} out of {questions.length}
+                </Typography>
+                <Box sx={{ margin: 4 }}>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setQuizStarted(false);
+                      setScore(0);
+                      setShowScore(false);
+                      setQuestions([]);
+                    }}
+                  >
+                    Play Again
+                  </Button>
+                </Box>
+              </Card>
+            ) : (
+              <QuizCard
+                questions={questions}
+                score={score}
+                setScore={setScore}
+                setShowScore={handleQuizEnd}
+              />
+            )}
+          </Box>
+        )}
+      </Container>
     </motion.div>
   );
 };

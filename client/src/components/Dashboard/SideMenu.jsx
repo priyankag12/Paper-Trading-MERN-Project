@@ -12,7 +12,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import menuItems from './MenuItems';
 import Avatar from '@mui/material/Avatar';
 import OptionsMenu from './OptionsMenu';
@@ -71,22 +71,36 @@ export default function SideMenu() {
   const theme = useTheme();
   const isOpen = useSelector((state) => state.sidebar.isOpen);
   const navigate = useNavigate();
+  const location = useLocation();
   const userInfo = useSelector((state) => state.user.userInfo);
 
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={isOpen}>
         <DrawerHeader>
-          <IconButton>
+          <IconButton sx={{ color: theme.palette.primary.main }}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           {menuItems.slice(0, -1).map((item, index) => (
-            <ListItem key={index} disablePadding onClick={() => navigate(item.route)}>
+            <ListItem
+              key={index}
+              disablePadding
+              onClick={() => navigate(item.route)}
+              sx={{
+                borderLeft: location.pathname === item.route ? `4px solid ${theme.palette.accent.main}` : 'none',
+                '&:hover': {
+                  borderLeft: `4px solid ${theme.palette.accent.light}`,
+                  color: theme.palette.primary.contrastText,
+                },
+              }}
+            >
               <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemIcon sx={{ color: location.pathname === item.route ? theme.palette.primary.contrastText : 'inherit' }}>
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItemButton>
             </ListItem>
@@ -101,20 +115,25 @@ export default function SideMenu() {
             gap: 1,
             alignItems: 'center',
             borderTop: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.divider,
             mt: 'auto',
+            backgroundColor: theme.palette.neutral.light,
           }}
         >
           <Avatar
             sizes="small"
             onClick={() => navigate('/profile')}
             alt={userInfo ? userInfo.name : 'Guest'}
-            src="/static/images/avatar/7.jpg" 
-            sx={{ width: 36, height: 36, cursor: 'pointer' }}
+            src="/static/images/avatar/7.jpg"
+            sx={{
+              width: 36,
+              height: 36,
+              cursor: 'pointer',
+            }}
           />
           <Box sx={{ mr: 'auto', pl: 1 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-              {userInfo ? userInfo.name : 'Guest'} 
+              {userInfo ? userInfo.name : 'Guest'}
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
               {userInfo ? userInfo.email : ''}

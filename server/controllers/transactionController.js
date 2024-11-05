@@ -11,6 +11,8 @@ exports.getTransactionHistory = async (req, res) => {
         const formattedTransactions = transactions.map((transaction) => ({
             ...transaction._doc,
             dateTime: format(transaction.dateTime, "yyyy-MM-dd, HH:mm:ss"),
+            pricePerShare: parseFloat(transaction.pricePerShare).toFixed(2),
+            totalTransactionValue: parseFloat(transaction.totalTransactionValue).toFixed(2),
         }));
 
         res.status(200).json({ transactions: formattedTransactions });

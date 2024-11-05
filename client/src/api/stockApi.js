@@ -3,7 +3,7 @@ import apiClient from "../services/apiClient";
 export const getStockDetails = async (symbol) => {
     try {
         const response = await apiClient.get(
-            `/dashboard/stock-balance?ticker=${symbol}`
+            `/transaction/stock-balance?ticker=${symbol}`
         );
         console.log("Get stock details data: ", response.data);
         return response.data;

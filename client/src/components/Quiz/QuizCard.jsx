@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Box, Button, Card, CardContent, Typography, Stack, LinearProgress } from "@mui/material";
+import { Box, Button, Card, CardContent, Typography, Stack, LinearProgress, useTheme } from "@mui/material";
+
 
 const QuizCard = ({ questions, score, setScore, setShowScore }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [previousSelections, setPreviousSelections] = useState([]);
+  const theme = useTheme();
 
   const handleOptionClick = (index) => {
     setSelectedOption(index);
@@ -46,7 +48,8 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
         width: 700, 
         height: 400, 
         padding: 4, 
-        overflow: 'hidden' 
+        overflow: 'hidden', 
+        borderRadius: 4,
       }}
     >
       <CardContent>
@@ -57,7 +60,13 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
         <LinearProgress
           variant="determinate"
           value={((currentQuestion + 1) / questions.length) * 100}
-          sx={{ marginBottom: 3 }}
+          sx={{ 
+            marginBottom: 3, 
+            bgcolor: theme.palette.grey[700], 
+            '& .MuiLinearProgress-bar': {
+              bgcolor: theme.palette.accent.main, 
+            },
+          }} 
         />
 
         <Stack direction="column" spacing={2}>

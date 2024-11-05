@@ -50,6 +50,16 @@ export const convertPoints = async(points) => {
   }
 }
 
+export const getUserDetails = async () => {
+  try {
+    const response = await apiClient.get("/quiz/get-points");
+    return response;
+  } catch (error) {
+    console.error("Error while retrieving leaderboard: ", error);
+    throw error; 
+  }
+};
+
 export const fetchLeaderBoard = async () => {
   try {
     const response = await apiClient.get("/quiz/leaderboard");

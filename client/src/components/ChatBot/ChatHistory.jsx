@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material";
-import ReactMarkdown from "react-markdown"; 
+import ReactMarkdown from "react-markdown";
 
 const ChatHistory = ({ chatHistory }) => {
   const theme = useTheme();
@@ -12,7 +12,7 @@ const ChatHistory = ({ chatHistory }) => {
         <Box
           key={index}
           sx={{
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: message.type === "user" ? theme.palette.accent.main : theme.palette.primary.light,
             paddingX: 1,
             borderRadius: "8px",
             mb: 1,

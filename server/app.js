@@ -26,10 +26,8 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/dashboard", transactionRoutes);
+app.use("/api/transaction", transactionRoutes);
 app.use("/api/portfolio", portfolioRoutes);
-
-
 app.use("/api/home", homeRoutes);
 app.use("/api/quiz", quizRoutes);
 

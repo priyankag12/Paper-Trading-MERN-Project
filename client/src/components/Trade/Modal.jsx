@@ -68,7 +68,7 @@ export default function Modal({
 
         try {
             const response = await apiClient.put(
-                "/dashboard/add-transaction",
+                "/transaction/add-transaction",
                 transactionData
             );
 
@@ -85,7 +85,7 @@ export default function Modal({
         }
     };
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="xs">
+        <Dialog open={open} onClose={onClose} maxWidth="xs" PaperProps={{ sx: { borderRadius: 5 } }}>
             <DialogTitle
                 sx={{
                     backgroundColor: theme.palette.background.paper,

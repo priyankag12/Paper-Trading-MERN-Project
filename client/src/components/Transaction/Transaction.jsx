@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Typography } from "@mui/material";
+import { Box, Chip, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import { getTransactions } from "../../api/transactionApi";
 
@@ -17,6 +17,20 @@ const columns = [
     headerName: "Transaction Type",
     flex: 1,
     minWidth: 130,
+    renderCell: (params) => (
+      <Chip
+        label={params.value}
+        color={params.value === "Buy" ? "success" : "error"}
+        sx={{
+          p: 0.5,
+          fontWeight: "bold",
+          backgroundColor:
+            params.value === "Buy" ? "rgba(76, 175, 80, 0.1)" : "rgba(244, 67, 54, 0.1)",
+          color: params.value === "Buy" ? "green" : "red",
+        }}
+        variant="filled"
+      />
+    ),
   },
   { field: "quantity", headerName: "Quantity", flex: 1, minWidth: 75 },
   {
@@ -35,6 +49,7 @@ const columns = [
 ];
 
 export default function Transaction() {
+  const theme = useTheme();
   const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -78,6 +93,13 @@ export default function Transaction() {
           pageSizeOptions={[10, 20, 30]}
           disableColumnResize
           density="compact"
+          sx={{
+            border: 2,
+            borderColor: theme.palette.accent.main,
+            '& .MuiDataGrid-row:hover': {
+              backgroundColor: theme.palette.neutral.light,
+            },
+          }}
         />
       </Box>
     </motion.div>

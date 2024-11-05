@@ -1,19 +1,40 @@
 import React from "react";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography, useTheme } from "@mui/material";
 import { formatDate } from "../utils/formatDate"; 
 import { motion } from "framer-motion";
 
 const NewsArticle = ({ article, delay }) => {
+  const theme = useTheme(); 
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }} 
       animate={{ opacity: 1, y: 0 }} 
       transition={{ duration: 0.5, delay }} 
     >
-      <Card variant="outlined" sx={{ margin: "10px 0", height: "120px" }}>
+      <Card 
+        variant="outlined" 
+        sx={{
+          margin: "10px 0", 
+          height: "120px", 
+          borderColor: theme.palette.accent.main,
+          transition: "transform 0.3s, box-shadow 0.3s", 
+          "&:hover": {
+            transform: "translateY(-5px)", 
+            boxShadow: `0 4px 20px ${theme.palette.accent.main}`, 
+          },
+        }}
+      >
         <CardContent sx={{ display: 'flex', flexGrow: 1, height: '100%', gap: 1 }}>
           <Box sx={{ flex: 1 }}>
-            <Typography variant="h6" sx={{ textOverflow: "ellipsis", overflow: "hidden"}}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                textOverflow: "ellipsis", 
+                overflow: "hidden", 
+                color: theme.palette.text.primary 
+              }}
+            >
               <a
                 href={article.url}
                 target="_blank"
