@@ -12,7 +12,7 @@ import { setMode } from '../../redux/DarkModeSlice';
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: theme.palette.background.alt,
+  backgroundColor: theme.palette.neutral.main,
   boxShadow: 'none',
   borderBottom: `1px solid ${theme.palette.divider}`,
 }));
@@ -32,7 +32,7 @@ export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
-        <Toolbar sx={{ justifyContent: 'space-between', px: 2 }}>
+        <Toolbar sx={{ justifyContent: 'space-between', px: 2}}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
               size="large"

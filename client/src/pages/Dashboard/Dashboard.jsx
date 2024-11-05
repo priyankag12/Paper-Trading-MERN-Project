@@ -79,7 +79,7 @@ export default function Dashboard() {
             transition: "transform 0.3s ease, box-shadow 0.3s ease",
             "&:hover": {
               transform: "scale(1.1)",
-              boxShadow: "0px 6px 16px rgba(0, 0, 0, 0.2)",
+              boxShadow: `0px 0px 10px 5px rgba(135, 55, 255, 0.4)`,
             },
           }}
         />

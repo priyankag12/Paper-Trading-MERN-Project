@@ -4,6 +4,12 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import RemoveIcon from '@mui/icons-material/Remove'; 
 import { motion } from "framer-motion";
+import { styled } from '@mui/system';
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  borderColor: theme.palette.accent.main, 
+  backgroundColor: theme.palette.accent.main,
+}));
 
 const GainerLoserCard = ({ stock, delay }) => { 
   const change_amount = parseFloat(stock.change_amount).toFixed(2);
@@ -31,7 +37,7 @@ const GainerLoserCard = ({ stock, delay }) => {
       animate={{ opacity: 1, y: 0 }} 
       transition={{ duration: 0.5, delay }} 
     >
-      <Card variant="outlined">
+      <StyledCard variant="outlined">
         <CardContent
           sx={{
             display: "flex",
@@ -41,8 +47,8 @@ const GainerLoserCard = ({ stock, delay }) => {
           }}
         >
           <Box>
-            <Typography variant="h6">{stock.ticker}</Typography>
-            <Typography variant="body2">${price}</Typography>
+            <Typography variant="h6" color="text.primary">{stock.ticker}</Typography>
+            <Typography variant="body2" color="text.secondary">${price}</Typography>
           </Box>
 
           <Chip
@@ -52,7 +58,7 @@ const GainerLoserCard = ({ stock, delay }) => {
             sx={{ fontWeight: "bold", width: "fit-content", minWidth: '2rem' }}
           />
         </CardContent>
-      </Card>
+      </StyledCard>
     </motion.div>
   );
 };

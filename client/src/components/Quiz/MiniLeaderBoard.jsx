@@ -1,24 +1,46 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
+  Card,
+  CardContent,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Divider,
   CircularProgress,
-  useTheme,
+  Container,
+  Avatar,
+  Badge,
 } from "@mui/material";
+import { styled } from '@mui/system';
 import { motion } from "framer-motion";
 import { fetchLeaderBoard } from "../../api/quizApi";
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  maxWidth: 600,
+  margin: 'auto',
+  borderRadius: 16,
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+  padding: theme.spacing(1),
+  border: `2px solid ${theme.palette.accent.main}`,
+}));
+
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(0.5),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}));
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  backgroundColor: theme.palette.accent.main, 
+}));
 
 const MiniLeaderBoard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [leaderboard, setLeaderboard] = useState([]);
-  const theme = useTheme();
 
   useEffect(() => {
     const getLeaderBoard = async () => {
@@ -28,7 +50,7 @@ const MiniLeaderBoard = () => {
         const rankedData = (response?.data?.ranking || []).map((item, index) => ({
           ...item,
           index: index + 1,
-        })).slice(0, 5);
+        })).slice(0, 3);
 
         setLeaderboard(rankedData || []);
       } catch (error) {
@@ -42,54 +64,62 @@ const MiniLeaderBoard = () => {
   }, []);
 
   return (
-    <motion.div
-      style={{ overflowX: "auto", maxWidth: "100%" }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
-        Leaderboard Top 5 
-      </Typography>
-      <Box sx={{ width: "100%", minWidth: 300 }}>
-        {isLoading ? (
-          <Box display="flex" justifyContent="center" alignItems="center" p={3}>
-            <CircularProgress />
-          </Box>
-        ) : leaderboard.length > 0 ? (
-          <TableContainer component={Paper} sx={{ boxShadow: 4, borderRadius: 2 }}>
-            <Table sx={{ minWidth: 300 }} aria-label="leaderboard table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">Ranking</TableCell>
-                  <TableCell align="center">Username</TableCell>
-                  <TableCell align="center">Points</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+    <Container maxWidth="sm" sx={{ marginTop: 4 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <StyledCard>
+          <CardContent>
+            <Typography variant="h4" align="center" gutterBottom>
+              Top 3
+            </Typography>
+            {isLoading ? (
+              <Box display="flex" justifyContent="center" alignItems="center" p={3}>
+                <CircularProgress />
+              </Box>
+            ) : leaderboard.length > 0 ? (
+              <List>
                 {leaderboard.map((row) => (
-                  <TableRow
-                    key={row._id}
-                    sx={{
-                      backgroundColor: theme.palette.primary.main,
-                      "&:hover": { backgroundColor: theme.palette.primary.dark },
-                    }}
-                  >
-                    <TableCell align="center">{row.index}</TableCell>
-                    <TableCell align="center">{row.username}</TableCell>
-                    <TableCell align="center">{row.points}</TableCell>
-                  </TableRow>
+                  <Box key={row._id}>
+                    <StyledListItem>
+                      <Box display="flex" alignItems="center">
+                        <Badge
+                          badgeContent={row.index}
+                          color={row.index === 1 ? 'warning' : row.index === 2 ? 'info' : row.index === 3 ? 'secondary' : 'default'}
+                          overlap="circular"
+                          sx={{ marginRight: 2 }}
+                        >
+                          <ListItemAvatar>
+                            <Avatar src={row.avatar} alt={row.username} sx={{ width: 56, height: 56 }} />
+                          </ListItemAvatar>
+                        </Badge>
+                        <ListItemText
+                          primary={
+                            <Typography variant="h6" fontWeight="500">
+                              {row.username}
+                            </Typography>
+                          }
+                        />
+                      </Box>
+                      <Typography variant="body1" fontWeight="500" color="textSecondary" sx={{ textAlign: 'right', flexGrow: 1 }}>
+                        Score: {row.points}
+                      </Typography>
+                    </StyledListItem>
+                    <StyledDivider variant="inset" component="li" />
+                  </Box>
                 ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) : (
-          <Typography variant="h6" align="center">
-            No leaderboard data available.
-          </Typography>
-        )}
-      </Box>
-    </motion.div>
+              </List>
+            ) : (
+              <Typography variant="h6" align="center">
+                No leaderboard data available.
+              </Typography>
+            )}
+          </CardContent>
+        </StyledCard>
+      </motion.div>
+    </Container>
   );
 };
 

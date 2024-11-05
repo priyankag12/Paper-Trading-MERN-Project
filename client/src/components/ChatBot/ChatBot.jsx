@@ -77,7 +77,7 @@ const ChatBot = () => {
         height: "100%",
         backgroundColor: theme.palette.background.alt,
         borderRadius: "8px",
-        boxShadow: `0px 4px 12px ${theme.palette.primary.light}`,
+        border: `1px solid ${theme.palette.accent.main}`, 
       }}
     >
       <Typography variant="h5" sx={{ margin: "16px" }}>
@@ -134,7 +134,7 @@ const ChatBot = () => {
             minWidth: "auto",
             padding: 1.5,
             borderRadius: "50%",
-            color: theme.palette.secondary.light,
+            color: theme.palette.accent.main,
           }}
         >
           <SendIcon />
