@@ -1,17 +1,17 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import UserStockshare from './UserStockshare';
 import PageViewsBarChart from './PageViewsBarChart';
-import SessionsChart from './SessionsChart';
 import StatCard from './StatCard';
-import PortfolioTable from './PortfolioTable';  // Import the PortfolioTable component
+import PortfolioTable from './PortfolioTable';
+import apiClient from '../../services/apiClient'; // Ensure this is the correct path
 
 const data = [
   {
-    title: 'Users',
+    title: 'Overall Portfolio Value',
     value: '14k',
     interval: 'Last 30 days',
     trend: 'up',
@@ -31,7 +31,7 @@ const data = [
     ],
   },
   {
-    title: 'Event count',
+    title: 'User Balance',
     value: '200k',
     interval: 'Last 30 days',
     trend: 'neutral',
@@ -43,18 +43,36 @@ const data = [
 ];
 
 export default function MainGrid() {
+  const [portfolioData, setPortfolioData] = useState([]);
+
+  useEffect(() => {
+    async function fetchPortfolioData() {
+      try {
+        const response = await apiClient.get('/portfolio/portfolio');
+        const portfolioData = response.data.map((item, index) => ({
+          id: index + 1,
+          stockName: item.stockName,
+          totalQuantity: item.totalQuantity,
+          avgPurchasePrice: item.avgPurchasePrice,
+          currentStockPrice: item.currentStockPrice,
+          gainLossPercentage: item.gainLossPercentage,
+          totalPortfolioValue: item.totalPortfolioValue,
+        }));
+        setPortfolioData(portfolioData);
+      } catch (error) {
+        console.error("Error fetching portfolio data:", error);
+      }
+    }
+
+    fetchPortfolioData();
+  }, []);
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      {/* cards */}
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
         Overview
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        columns={12}
-        sx={{ mb: (theme) => theme.spacing(2) }}
-      >
+      <Grid container spacing={2} columns={12} sx={{ mb: 2 }}>
         {data.map((card, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6, lg: 3 }}>
             <StatCard {...card} />
@@ -62,17 +80,13 @@ export default function MainGrid() {
         ))}
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}></Grid>
         <Grid size={{ sm: 12, md: 6 }}>
-          <SessionsChart />
-        </Grid>
-        <Grid size={{ sm: 12, md: 6 }}>
           <PageViewsBarChart />
         </Grid>
       </Grid>
 
       <Grid container spacing={2} columns={12}>
         <Grid size={{ md: 12, lg: 9 }}>
-          {/* Include PortfolioTable here */}
-          <PortfolioTable />  {/* This will render your table in this space */}
+          <PortfolioTable rows={portfolioData} />
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
           <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
@@ -83,3 +97,4 @@ export default function MainGrid() {
     </Box>
   );
 }
+
