@@ -21,6 +21,7 @@
         "babel-preset-react-app": "^10.0.1",
         "chart.js": "^4.4.4",
         "dotenv": "^16.4.5",
+        "framer-motion": "^11.11.10",
         "js-cookie": "^3.0.5",
         "lodash.debounce": "^4.0.8",
         "lucide-react": "^0.451.0",
@@ -33,6 +34,7 @@
         "react-router-dom": "^6.26.2",
         "react-scripts": "^5.0.1",
         "recharts": "^2.12.7",
+        "sass": "^1.80.3",
         "web-vitals": "^2.1.4"
     },
     "scripts": {

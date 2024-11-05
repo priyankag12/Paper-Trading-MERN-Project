@@ -7,6 +7,7 @@ exports.getTransactionHistory = async (req, res) => {
         const transactions = await Transaction.find({
             userId: req.user._id,
         }).sort({ dateTime: -1 });
+
         const formattedTransactions = transactions.map((transaction) => ({
             ...transaction._doc,
             dateTime: format(transaction.dateTime, "yyyy-MM-dd, HH:mm:ss"),

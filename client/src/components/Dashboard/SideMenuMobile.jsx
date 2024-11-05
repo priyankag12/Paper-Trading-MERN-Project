@@ -14,7 +14,6 @@ import MenuItems from "./MenuItems";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMobileMenu } from "../../redux/MobileMenuSlice";
-import { getUserInfo } from "../../auth";
 
 export default function SideMenuMobile() {
   const navigate = useNavigate();
@@ -22,7 +21,8 @@ export default function SideMenuMobile() {
     (state) => state.mobileMenu.isMobileMenuOpen
   );
   const dispatch = useDispatch();
-  const userInfo = getUserInfo();
+
+  const userInfo = useSelector((state) => state.user.userInfo); 
 
   return (
     <Drawer
@@ -49,12 +49,13 @@ export default function SideMenuMobile() {
           >
             <Avatar
               sizes="small"
-              alt="Riley Carter"
-              src="/static/images/avatar/7.jpg"
-              sx={{ width: 24, height: 24 }}
+              
+              alt={userInfo ? userInfo.name : "Guest"}
+              src="/static/images/avatar/7.jpg" 
+              sx={{ width: 24, height: 24, cursor: 'pointer' }} 
             />
             <Typography component="p" variant="h6">
-              Riley Carter
+              {userInfo ? userInfo.name : "Guest"}
             </Typography>
           </Stack>
         </Stack>
@@ -91,9 +92,10 @@ export default function SideMenuMobile() {
         >
           <Avatar
             sizes="small"
-            alt="Riley Carter"
-            src="/static/images/avatar/7.jpg"
-            sx={{ width: 36, height: 36 }}
+            onClick={() => navigate('/profile')} 
+            alt={userInfo ? userInfo.name : "Guest"}
+            src="/static/images/avatar/7.jpg" 
+            sx={{ width: 36, height: 36, cursor: 'pointer'  }}
           />
           <Box sx={{ mr: "auto", pl: 1 }}>
             <Typography
