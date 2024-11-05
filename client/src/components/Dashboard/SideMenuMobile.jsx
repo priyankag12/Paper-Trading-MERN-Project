@@ -22,7 +22,6 @@ export default function SideMenuMobile() {
   );
   const dispatch = useDispatch();
 
-  // Get user info from Redux state
   const userInfo = useSelector((state) => state.user.userInfo); 
 
   return (
@@ -50,9 +49,10 @@ export default function SideMenuMobile() {
           >
             <Avatar
               sizes="small"
+              
               alt={userInfo ? userInfo.name : "Guest"}
-              src="/static/images/avatar/7.jpg" // You can replace this with userInfo.avatar if you have it
-              sx={{ width: 24, height: 24 }}
+              src="/static/images/avatar/7.jpg" 
+              sx={{ width: 24, height: 24, cursor: 'pointer' }} 
             />
             <Typography component="p" variant="h6">
               {userInfo ? userInfo.name : "Guest"}
@@ -92,9 +92,10 @@ export default function SideMenuMobile() {
         >
           <Avatar
             sizes="small"
+            onClick={() => navigate('/profile')} 
             alt={userInfo ? userInfo.name : "Guest"}
-            src="/static/images/avatar/7.jpg" // You can replace this with userInfo.avatar if you have it
-            sx={{ width: 36, height: 36 }}
+            src="/static/images/avatar/7.jpg" 
+            sx={{ width: 36, height: 36, cursor: 'pointer'  }}
           />
           <Box sx={{ mr: "auto", pl: 1 }}>
             <Typography
