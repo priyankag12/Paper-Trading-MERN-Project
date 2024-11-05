@@ -7,7 +7,7 @@ import Home from "./components/Home/Home";
 import Portfolio from "./components/Portfolio/Portfolio";
 import TransactionHistory from "./components/Transaction/Transaction";
 import EarnPoints from "./components/Quiz/EarnPoints";
-import LeaderBoard from "./components/Quiz/Leaderboard";
+import LeaderBoard from "./components/LeaderBoard/Leaderboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";

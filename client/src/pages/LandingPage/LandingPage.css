@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.landing-page {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #0073e6;
+    font-weight: bold;
+}
+
+.nav a,
+.cta-button {
+    margin: 0 10px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #555;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #0073e6;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background-color: #0073e6;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cta-button:hover {
+    background-color: #005bb5;
+}
+
+.hero-section {
+    padding: 80px 10%;
+    background-color: #f5f8fa;
+    text-align: center;
+}
+
+.hero-content h2 {
+    font-size: 40px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.features-section,
+.how-it-works-section,
+.benefits-section,
+.faq-section {
+    padding: 60px 10%;
+    text-align: center;
+}
+
+.features,
+.benefits {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature,
+.benefit {
+    flex: 1 1 220px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.feature:hover,
+.benefit:hover {
+    transform: translateY(-5px);
+}
+
+.feature h4,
+.benefit h4 {
+    font-size: 20px;
+    color: #0073e6;
+    margin-bottom: 10px;
+}
+
+.steps-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.steps {
+    list-style: none;
+    padding: 0;
+}
+
+.steps li {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.steps li:hover {
+    transform: translateY(-5px);
+}
+
+.step-icon {
+    background-color: #0073e6;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.step-content h4 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.step-content p {
+    font-size: 16px;
+    color: #666;
+}
+
+.faq-section {
+    padding: 60px 10%;
+    text-align: center;
+    background-color: #e9f4fa; /* Light background color for FAQ */
+    border-radius: 8px; /* Rounded corners for a softer look */
+}
+
+.faq {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left; /* Aligns text to the left for better readability */
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-answer {
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.footer {
+    padding: 20px 10%;
+    background-color: #0073e6; /* Set a consistent color for the footer */
+    color: #ffffff; /* Change text color to white for better contrast */
+    text-align: center;
+}
+
+/* Additional styles to maintain readability */
+.footer p {
+    margin: 0; /* Remove default margin for footer text */
+}
+
