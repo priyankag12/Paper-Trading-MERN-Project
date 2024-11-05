@@ -1,9 +1,6 @@
-
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { useDrawingArea } from '@mui/x-charts/hooks';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -11,119 +8,54 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
+export default function StockPieChart() {
+  const [data, setData] = useState([]);
+  const [stocks, setStocks] = useState([]);
+  const [totalValue, setTotalValue] = useState("0");
+  const colors = [
+    'hsl(220, 20%, 65%)',
+    'hsl(220, 20%, 42%)',
+    'hsl(220, 20%, 35%)',
+    'hsl(220, 20%, 25%)',
+  ];
 
-const data = [
-  { label: 'Apple', value: 50000 },
-  { label: 'Nvidia', value: 35000 },
-  { label: 'Meta', value: 10000 },
-  { label: 'Amazon', value: 5000 },
-];
+  useEffect(() => {
+    // Replace 'your-api-url' with the actual API endpoint
+    axios.get('api/portfolio')
+      .then(response => {
+        const stockData = response.data;
+        let total = 0;
 
-const countries = [
-  {
-    name: 'Apple',
-    value: 50,
-    
-    color: 'hsl(220, 25%, 65%)',
-  },
-  {
-    name: 'Nvidia',
-    value: 35,
-   
-    color: 'hsl(220, 25%, 45%)',
-  },
-  {
-    name: 'Meta',
-    value: 10,
-    
-    color: 'hsl(220, 25%, 30%)',
-  },
-  {
-    name: 'Amazon',
-    value: 5,
-    
-    color: 'hsl(220, 25%, 20%)',
-  },
-];
+        const chartData = stockData.map((stock, index) => {
+          total += stock.totalQuantity * stock.avgPurchasePrice;
+          return {
+            label: stock.stockName,
+            value: stock.totalQuantity * stock.avgPurchasePrice,
+          };
+        });
 
-const StyledText = styled('text', {
-  shouldForwardProp: (prop) => prop !== 'variant',
-})(({ theme }) => ({
-  textAnchor: 'middle',
-  dominantBaseline: 'central',
-  fill: (theme.vars || theme).palette.text.secondary,
-  variants: [
-    {
-      props: {
-        variant: 'primary',
-      },
-      style: {
-        fontSize: theme.typography.h5.fontSize,
-      },
-    },
-    {
-      props: ({ variant }) => variant !== 'primary',
-      style: {
-        fontSize: theme.typography.body2.fontSize,
-      },
-    },
-    {
-      props: {
-        variant: 'primary',
-      },
-      style: {
-        fontWeight: theme.typography.h5.fontWeight,
-      },
-    },
-    {
-      props: ({ variant }) => variant !== 'primary',
-      style: {
-        fontWeight: theme.typography.body2.fontWeight,
-      },
-    },
-  ],
-}));
+        const stockDetails = stockData.map((stock, index) => ({
+          name: stock.stockName, // use 'name' instead of 'stockName' here
+          percentage: ((stock.totalQuantity * stock.avgPurchasePrice) / total) * 100,
+          color: colors[index % colors.length],
+        }));
 
-function PieCenterLabel({ primaryText, secondaryText }) {
-  const { width, height, left, top } = useDrawingArea();
-  const primaryY = top + height / 2 - 10;
-  const secondaryY = primaryY + 24;
+        setData(chartData);
+        setStocks(stockDetails);
+        setTotalValue(total.toFixed(2));
+      })
+      .catch(error => {
+        console.error("Error fetching stock data:", error);
+      });
+  }, []);
 
   return (
-    <React.Fragment>
-      <StyledText variant="primary" x={left + width / 2} y={primaryY}>
-        {primaryText}
-      </StyledText>
-      <StyledText variant="secondary" x={left + width / 2} y={secondaryY}>
-        {secondaryText}
-      </StyledText>
-    </React.Fragment>
-  );
-}
-
-PieCenterLabel.propTypes = {
-  primaryText: PropTypes.string.isRequired,
-  secondaryText: PropTypes.string.isRequired,
-};
-
-const colors = [
-  'hsl(220, 20%, 65%)',
-  'hsl(220, 20%, 42%)',
-  'hsl(220, 20%, 35%)',
-  'hsl(220, 20%, 25%)',
-];
-
-export default function ChartUserByCountry() {
-  return (
-    <Card
-      variant="outlined"
-      sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}
-    >
+    <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2">
-          Users by country
+          User Stock Share
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
           <PieChart
             colors={colors}
             margin={{
@@ -134,7 +66,7 @@ export default function ChartUserByCountry() {
             }}
             series={[
               {
-                data,
+                data: data,
                 innerRadius: 75,
                 outerRadius: 100,
                 paddingAngle: 0,
@@ -143,20 +75,25 @@ export default function ChartUserByCountry() {
             ]}
             height={385}
             width={260}
-            slotProps={{
-              legend: { hidden: true },
+          />
+          {/* Overlay for total value */}
+          <Typography
+            component="div"
+            variant="h6"
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              fontSize: '24px',
+              color: '#333',
             }}
           >
-            <PieCenterLabel primaryText="98.5K" secondaryText="Total" />
-          </PieChart>
+            ${totalValue}
+          </Typography>
         </Box>
-        {countries.map((country, index) => (
-          <Stack
-            key={index}
-            direction="row"
-            sx={{ alignItems: 'center', gap: 2, pb: 2 }}
-          >
-            {country.flag}
+        {stocks.map((stock, index) => (
+          <Stack key={index} direction="row" sx={{ alignItems: 'center', gap: 2, pb: 2 }}>
             <Stack sx={{ gap: 1, flexGrow: 1 }}>
               <Stack
                 direction="row"
@@ -167,19 +104,18 @@ export default function ChartUserByCountry() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: '500' }}>
-                  {country.name}
+                  {stock.stockName} {/* Use stock.name instead of stock.stockName */}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {country.value}%
+                  {stock.percentage.toFixed(1)}%
                 </Typography>
               </Stack>
               <LinearProgress
                 variant="determinate"
-                aria-label="Number of users by country"
-                value={country.value}
+                value={stock.percentage}
                 sx={{
                   [`& .${linearProgressClasses.bar}`]: {
-                    backgroundColor: country.color,
+                    backgroundColor: stock.color,
                   },
                 }}
               />
