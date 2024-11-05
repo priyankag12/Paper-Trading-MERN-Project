@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -13,7 +14,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router-dom';
 import menuItems from './MenuItems';
-import { useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import OptionsMenu from './OptionsMenu';
 import Stack from '@mui/material/Stack';
@@ -72,7 +72,7 @@ export default function SideMenu() {
   const isOpen = useSelector((state) => state.sidebar.isOpen);
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user.userInfo);
-  
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Drawer variant="permanent" open={isOpen}>
@@ -107,9 +107,10 @@ export default function SideMenu() {
         >
           <Avatar
             sizes="small"
+            onClick={() => navigate('/profile')}
             alt={userInfo ? userInfo.name : 'Guest'}
             src="/static/images/avatar/7.jpg" 
-            sx={{ width: 36, height: 36 }}
+            sx={{ width: 36, height: 36, cursor: 'pointer' }}
           />
           <Box sx={{ mr: 'auto', pl: 1 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
