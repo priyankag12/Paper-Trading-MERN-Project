@@ -11,7 +11,7 @@ import LeaderBoard from "./components/LeaderBoard/Leaderboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import { themeSettings } from "./theme";
+import { themeSettings } from "./Theme";
 import { useSelector } from "react-redux";
 import BuySellNew from "./components/Trade/BuySellNew";
 import CandleStickGraph from "./components/CandleStickGraph";
