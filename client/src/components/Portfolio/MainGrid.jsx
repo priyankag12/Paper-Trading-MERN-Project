@@ -84,13 +84,6 @@ export default function MainGrid() {
                         trend="neutral" 
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
-                    <StatCard 
-                        title={<Typography variant="subtitle1" fontWeight="bold">User Points</Typography>} 
-                        value={points.toString()} 
-                        trend="neutral" 
-                    />
-                </Grid>
             </Grid>
 
             <Grid container spacing={2} columns={12}>
