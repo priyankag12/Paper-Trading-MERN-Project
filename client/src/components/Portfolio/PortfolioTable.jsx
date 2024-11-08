@@ -1,6 +1,6 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 const columns = [
   { field: 'stockName', headerName: 'Stock Name', flex: 1.5, minWidth: 170 },
@@ -12,13 +12,19 @@ const columns = [
 ];
 
 export default function PortfolioTable({ rows }) {
+  const theme = useTheme();
+
   return (
     <Box sx={{ overflowX: 'auto', maxWidth: '100%' }}>
       <Typography
         variant="h4"
         fontWeight="bold"
         gutterBottom
-        sx={{ mb: 2, textAlign: 'left', color: '#333' }}
+        sx={{
+          mb: 2,
+          textAlign: 'left',
+          color: theme.palette.text.primary,
+        }}
       >
         Portfolio Table
       </Typography>
@@ -38,32 +44,32 @@ export default function PortfolioTable({ rows }) {
           disableColumnResize
           density="compact"
           sx={{
-            '& .MuiDataGrid-root': {
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              backgroundColor: '#fafafa',
-            },
+            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: '8px',
+            backgroundColor: theme.palette.background.paper,
             '& .MuiDataGrid-cell': {
-              color: '#333',
-              fontSize: '0.875rem',
+              color: theme.palette.text.secondary,
+              fontSize: theme.typography.body2.fontSize,
             },
             '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#f4f4f4',
-              borderBottom: '1px solid #ddd',
-              fontWeight: 'bold',
+              backgroundColor: theme.palette.background.default,
+              borderBottom: `1px solid ${theme.palette.divider}`,
+              fontWeight: theme.typography.fontWeightBold,
+              color: theme.palette.text.primary,
             },
             '& .MuiDataGrid-row:hover': {
-              backgroundColor: '#f1f1f1',
+              backgroundColor: theme.palette.action.hover,
               cursor: 'pointer',
             },
             '& .MuiDataGrid-row.even': {
-              backgroundColor: '#f9f9f9',
+              backgroundColor: theme.palette.background.default,
             },
             '& .MuiDataGrid-row.odd': {
-              backgroundColor: '#fff',
+              backgroundColor: theme.palette.background.paper,
             },
             '& .MuiDataGrid-footerContainer': {
-              borderTop: '1px solid #ddd',
+              borderTop: `1px solid ${theme.palette.divider}`,
+              backgroundColor: theme.palette.background.default,
             },
           }}
         />
