@@ -26,9 +26,8 @@ exports.getUserQuizInfo = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        const ranking = await User.find().sort({ points: -1 }).select("username points");
-        const userRank = ranking.findIndex(user => user._id.toString() === userId) + 2;
-
+        const ranking = await User.find({}, { _id: 1, username: 1, points: 1 }) .sort({ points: -1 }) .lean(); 
+        const userRank = ranking.findIndex((item) => item._id.toString() === userId.toString()) + 1;
         res.status(200).json({ 
             points: user.points, 
             balance: user.balance, 

@@ -44,7 +44,7 @@ export default function PortfolioTable({ rows }) {
           disableColumnResize
           density="compact"
           sx={{
-            border: `1px solid ${theme.palette.divider}`,
+            border: `1px solid ${theme.palette.accent.main}`,
             borderRadius: '8px',
             backgroundColor: theme.palette.background.paper,
             '& .MuiDataGrid-cell': {
