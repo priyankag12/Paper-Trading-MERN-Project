@@ -1,105 +1,108 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import UserStockshare from "./UserStockshare";
 import PageViewsBarChart from "./PageViewsBarChart";
 import StatCard from "./StatCard";
 import PortfolioTable from "./PortfolioTable";
 import apiClient from "../../services/apiClient";
-
-const data = [
-    {
-        title: "Overall Portfolio Value",
-        value: "14k",
-        interval: "Last 30 days",
-        trend: "up",
-        data: [
-            200, 24, 220, 260, 240, 380, 100, 240, 280, 240, 300, 340, 320, 360,
-            340, 380, 360, 400, 380, 420, 400, 640, 340, 460, 440, 480, 460,
-            600, 880, 920,
-        ],
-    },
-    {
-        title: "Conversions",
-        value: "325",
-        interval: "Last 30 days",
-        trend: "down",
-        data: [
-            1640, 1250, 970, 1130, 1050, 900, 720, 1080, 900, 450, 920, 820,
-            840, 600, 820, 780, 800, 760, 380, 740, 660, 620, 840, 500, 520,
-            480, 400, 360, 300, 220,
-        ],
-    },
-    {
-        title: "User Balance",
-        value: "200k",
-        interval: "Last 30 days",
-        trend: "neutral",
-        data: [
-            500, 400, 510, 530, 520, 600, 530, 520, 510, 730, 520, 510, 530,
-            620, 510, 530, 520, 410, 530, 520, 610, 530, 520, 610, 530, 420,
-            510, 430, 520, 510,
-        ],
-    },
-];
+import { getUserDetails } from "../../api/quizApi";
+import { useTheme } from "@mui/material";
 
 export default function MainGrid() {
-    const [portfolioData, setPortfolioData] = useState([]);
+  const [points, setPoints] = useState(0);
+  const [balance, setBalance] = useState(0);
+  const [rank, setRank] = useState(0);
+  const [portfolioData, setPortfolioData] = useState([]);
+  const theme = useTheme();
 
-    useEffect(() => {
-        async function fetchPortfolioData() {
-            try {
-                const response = await apiClient.get("/portfolio/portfolio");
-                const portfolioData = response.data.map((item, index) => ({
-                    id: index + 1,
-                    stockName: item.stockName,
-                    totalQuantity: item.totalQuantity,
-                    avgPurchasePrice: item.avgPurchasePrice,
-                    currentStockPrice: item.currentStockPrice,
-                    gainLossPercentage: item.gainLossPercentage,
-                    totalPortfolioValue: item.totalPortfolioValue,
-                }));
-                setPortfolioData(portfolioData);
-            } catch (error) {
-                console.error("Error fetching portfolio data:", error);
-            }
-        }
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await getUserDetails();
+        console.log(response);
+        setPoints(response.data.points);
+        setBalance(Number(response.data.balance).toFixed(2));
+        setRank(response.data.userRank);
+      } catch (error) {
+        console.error("Error fetching user stats:", error);
+      }
+    }
 
-        fetchPortfolioData();
-    }, []);
+    async function fetchPortfolioData() {
+      try {
+        const response = await apiClient.get("/portfolio/portfolio");
+        const portfolioData = response.data.map((item, index) => ({
+          id: index + 1,
+          stockName: item.stockName,
+          totalQuantity: item.totalQuantity,
+          avgPurchasePrice: item.avgPurchasePrice,
+          currentStockPrice: item.currentStockPrice,
+          gainLossPercentage: item.gainLossPercentage,
+          totalPortfolioValue: item.totalPortfolioValue,
+        }));
+        setPortfolioData(portfolioData);
+      } catch (error) {
+        console.error("Error fetching portfolio data:", error);
+      }
+    }
 
-    return (
-        <Box sx={{ width: "100%", maxWidth: { sm: "100%", md: "1700px" } }}>
-            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-                Overview
-            </Typography>
-            <Grid container spacing={2} columns={12} sx={{ mb: 2 }}>
-                {data.map((card, index) => (
-                    <Grid key={index} size={{ xs: 12, sm: 6, lg: 3 }}>
-                        <StatCard {...card} />
-                    </Grid>
-                ))}
-                <Grid size={{ xs: 12, sm: 6, lg: 3 }}></Grid>
-                <Grid size={{ sm: 12, md: 6 }}>
-                    <PageViewsBarChart rows={portfolioData} />
-                </Grid>
+    fetchUserData();
+    fetchPortfolioData();
+  }, []);
+
+  return (
+    <Box
+      sx={{ width: "100%", maxWidth: { sm: "100%", md: "1700px" }, padding: 2 }}
+    >
+      <Typography variant="h3" sx={{ mb: 2 }}>
+        Overview
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
+          gap: 2,
+        }}
+      >
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <StatCard title="User Balance" value={`$${balance}`} />
             </Grid>
-
-            <Grid container spacing={2} columns={12}>
-                <Grid size={{ md: 12, lg: 9 }}>
-                    <PortfolioTable rows={portfolioData} />
-                </Grid>
-                <Grid size={{ xs: 12, lg: 3 }}>
-                    <Stack
-                        gap={2}
-                        direction={{ xs: "column", sm: "row", lg: "column" }}
-                    >
-                        <UserStockshare portfolioData={portfolioData} />
-                    </Stack>
-                </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <StatCard title="User Rank" value={rank} />
             </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <StatCard title="User Points" value={points} />
+            </Grid>
+          </Grid>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", lg: "row" },
+              gap: 2,
+            }}
+          >
+            <Box sx={{ flex: 1, minWidth: "0" }}>
+              <PageViewsBarChart rows={portfolioData} />
+            </Box>
+          </Box>
         </Box>
-    );
+
+        <Box sx={{ maxWidth: { xs: "100%", lg: "400px" }}}>
+          <Stack direction="column" spacing={2}>
+            <UserStockshare portfolioData={portfolioData} />
+          </Stack>
+        </Box>
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <PortfolioTable rows={portfolioData} />
+      </Box>
+    </Box>
+  );
 }
