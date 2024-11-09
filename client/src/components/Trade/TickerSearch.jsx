@@ -60,7 +60,7 @@ const TickerSearch = ({ onSelectStock }) => {
         <Stack
             style={{
                 backgroundColor: theme.palette.background.default,
-                minHeight: "100vh",
+                minHeight: "50vh",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

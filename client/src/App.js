@@ -22,7 +22,8 @@ function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
-  return (
+
+return (
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -46,11 +47,11 @@ function App() {
           </Route>
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<LandingPage />} />
-          <Route path="candle" element={<CandleStickGraph symbol="IBM" />} />
         </Routes>
       </ThemeProvider>
     </Router>
   );
+
 }
 
 export default App;
