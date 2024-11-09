@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "../auth";
 
 const apiClient = axios.create({
-    baseURL: "http://mern-project-navy-theta.vercel.app/api",
+    baseURL: "https://mern-project-navy-theta.vercel.app/api",
 });
 
 apiClient.interceptors.request.use(
