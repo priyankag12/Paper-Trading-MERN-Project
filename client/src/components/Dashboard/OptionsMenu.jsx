@@ -44,7 +44,7 @@ function OptionsMenu({ showBadge = false }) {
     removeToken();
     removeUserInfo();
     dispatch(clearUser());
-    navigate('/paper-lingo');
+    navigate('/');
   };
 
   return (

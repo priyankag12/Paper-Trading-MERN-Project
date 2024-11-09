@@ -7,6 +7,8 @@ import {
   CircularProgress,
   Card,
   CardContent,
+  Snackbar,
+  Alert,
   useTheme,
 } from "@mui/material";
 import QuizCard from "./QuizCard";
@@ -30,6 +32,7 @@ const EarnPoints = () => {
   const [pointsLoading, setPointsLoading] = useState(true);
   const [balance, setBalance] = useState(0);
   const [ranking, setRanking] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar control
   const theme = useTheme();
 
   const startQuiz = async () => {
@@ -52,6 +55,7 @@ const EarnPoints = () => {
       await convertPoints(pointsToConvert);
       console.log("Points converted to balance successfully!");
       await fetchUserDetails();
+      setSnackbarOpen(true); // Show Snackbar on successful conversion
     } catch (error) {
       console.error("Error converting points to balance:", error);
     }
@@ -74,6 +78,10 @@ const EarnPoints = () => {
   useEffect(() => {
     fetchUserDetails();
   }, []);
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
     <motion.div
@@ -204,6 +212,17 @@ const EarnPoints = () => {
           </Box>
         )}
       </Container>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+          Points converted and added to your account successfully!
+        </Alert>
+      </Snackbar>
     </motion.div>
   );
 };

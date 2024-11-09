@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { BarChart } from '@mui/x-charts/BarChart';
@@ -20,9 +19,9 @@ export default function PageViewsBarChart({ rows }) {
   const portfolioValues = rows.map((row) => row.totalPortfolioValue);
 
   return (
-    <Card variant="outlined" sx={{ width: '100%' }}>
+    <Card variant="outlined" sx={{ width: '100%', border: `1px solid ${theme.palette.accent.main}` }}>
       <CardContent>
-        <Typography component="h2" variant="subtitle2" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Individual Stock Graph
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
@@ -34,9 +33,6 @@ export default function PageViewsBarChart({ rows }) {
               gap: 1,
             }}
           >
-            <Typography variant="h4" component="p">
-              {/* Display total portfolio value or other summary if needed */}
-            </Typography>
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
             Growth/Loss of each individual stock
