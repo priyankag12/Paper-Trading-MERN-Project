@@ -94,8 +94,8 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
         </Stack>
 
         <Box sx={{ marginTop: 3, display: "flex", justifyContent: "space-between" }}>
-          {currentQuestion > 0 && <Button variant="outlined" onClick={handlePreviousQuestion}>Previous Question</Button>}
-          {isAnswered && <Button variant="outlined" onClick={handleNextQuestion}>Next Question</Button>}
+          {currentQuestion > 0 && <Button variant="outlined" onClick={handlePreviousQuestion} sx={{ backgroundColor:theme.palette.accent.main, color:'white'}}>Previous Question</Button>}
+          {isAnswered && <Button variant="outlined" onClick={handleNextQuestion} sx={{ backgroundColor:theme.palette.accent.main, color:'white'}}>Next Question</Button>}
         </Box>
       </CardContent>
     </Card>
