@@ -45,7 +45,7 @@ function App() {
             <Route path="trade" element={<BuySellNew />} />
           </Route>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/paper-lingo" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="candle" element={<CandleStickGraph symbol="IBM" />} />
         </Routes>
       </ThemeProvider>

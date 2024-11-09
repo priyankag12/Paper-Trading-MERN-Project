@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword";
 import { loginUser } from "../../api/auth";
@@ -60,6 +60,7 @@ export default function SignIn(props) {
   const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -189,10 +190,11 @@ export default function SignIn(props) {
                 component="button"
                 type="button"
                 onClick={handleClickOpen}
-                variant="body2"
+                variant="h6"
                 sx={{
                   alignSelf: "baseline",
                   marginBottom: "0.5rem",
+                  color:theme.palette.accent.main,
                 }}
               >
                 Forgot your password?
@@ -204,7 +206,7 @@ export default function SignIn(props) {
             </Button>
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
-              <Link href="/signup" variant="body2" sx={{ alignSelf: "center" }}>
+              <Link href="/signup" variant="h5" sx={{ alignSelf: "center", color:theme.palette.accent.main }}>
                 Sign up
               </Link>
             </Typography>
