@@ -16,7 +16,7 @@ const quizRoutes = require("./routes/quizRoutes");
 // Middleware
 app.use(
     cors({
-        origin: "https://paper-lingo.vercel.app",
+        origin: "*",
         credentials: true,
         allowedHeaders: ["Authorization", "Content-Type"],
     })
