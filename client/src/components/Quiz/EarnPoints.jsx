@@ -32,7 +32,7 @@ const EarnPoints = () => {
   const [pointsLoading, setPointsLoading] = useState(true);
   const [balance, setBalance] = useState(0);
   const [ranking, setRanking] = useState(null);
-  const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar control
+  const [snackbarOpen, setSnackbarOpen] = useState(false); 
   const theme = useTheme();
 
   const startQuiz = async () => {
@@ -55,7 +55,7 @@ const EarnPoints = () => {
       await convertPoints(pointsToConvert);
       console.log("Points converted to balance successfully!");
       await fetchUserDetails();
-      setSnackbarOpen(true); // Show Snackbar on successful conversion
+      setSnackbarOpen(true); 
     } catch (error) {
       console.error("Error converting points to balance:", error);
     }

@@ -104,6 +104,7 @@ export default function Modal({
                     width: "400px",
                     height: "350px",
                     alignItems: "center",
+                    textAlign: "center",
                 }}
             >
                 <Typography

@@ -71,7 +71,7 @@ const TickerSearch = ({ onSelectStock }) => {
                     backgroundColor: theme.palette.background.paper,
                     padding: "40px",
                     borderRadius: "10px",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    border: `2px solid ${theme.palette.accent.main}`, 
                     maxWidth: "600px",
                     width: "100%",
                     textAlign: "center",
@@ -105,7 +105,6 @@ const TickerSearch = ({ onSelectStock }) => {
                     sx={{
                         mb: 3,
                         alignItems: "center",
-                        backgroundColor: theme.palette.action.hover,
                         borderRadius: "8px",
                         padding: "10px 15px",
                     }}

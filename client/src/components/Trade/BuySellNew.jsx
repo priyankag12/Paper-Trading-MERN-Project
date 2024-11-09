@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TickerSearch from "./TickerSearch";
 import {
+    Box,
     Button,
     CircularProgress,
     Stack,
@@ -88,7 +89,7 @@ const BuySellNew = () => {
             <TickerSearch onSelectStock={setSelectedStock} />
             {selectedStock && (
                 <Stack spacing={10} sx={{ alignItems: "center", width: "100%" }}>
-                    <CandleStickGraph stockData={candleData} />
+                    <Box sx={{  display: 'flex', flexDirection: { xs: 'column', lg: 'row' },  gap: 5,  alignItems: "center",  width: "100%" }}>
                     <Stack spacing={1} sx={{ alignItems: "center" }}>
                         <Typography variant="h2" sx={{ fontWeight: "bold" }}>
                             Selected Stock
@@ -190,6 +191,8 @@ const BuySellNew = () => {
                             ) : null}
                         </Typography>
                     </Stack>
+                    <CandleStickGraph stockData={candleData} />
+                    </Box>
                 </Stack>
             )}
             <Modal

@@ -15,10 +15,24 @@ const CandleStickGraph = ({ stockData }) => {
     return (
         <Box
             sx={{
-                width: "50vw",
+                width: "60vw",
                 maxWidth: "100vw",
                 overflowX: "hidden",
                 height: "40vh",
+                border: `2px solid ${theme.palette.accent.main}`, 
+                borderRadius: "8px",
+                scrollbarWidth: "thin", 
+                "&::-webkit-scrollbar": {
+                    width: "8px",
+                    height: "8px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: theme.palette.neutral.main,
+                    borderRadius: "4px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                    backgroundColor: theme.palette.neutral.light, 
+                },
             }}
         >
             <ReactApexCharts
