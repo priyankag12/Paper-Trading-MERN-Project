@@ -5,7 +5,7 @@ import MainGrid from './MainGrid'
 const Portfolio = () => {
   return (
     <>
-    <MainGrid/>    
+    <MainGrid/>
     
     </>
   )

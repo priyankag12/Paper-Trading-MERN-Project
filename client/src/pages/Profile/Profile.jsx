@@ -4,7 +4,7 @@ import {
   CssBaseline,
   Modal,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideMenu from "../../components/Dashboard/SideMenu";
@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser, selectUserInfo } from "../../redux/UserSlice";
 import { getProfile, loginUser, updateProfile } from "../../api/auth.js";
 import "./profile.scss";
+import ConfirmPassword from "../../components/Authentication/ConfirmPassword.jsx";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,24 @@ const Profile = () => {
   const [email, setEmail] = useState(userInfo?.email || "");
   const [username, setUsername] = useState(userInfo?.username || "");
   const [age, setAge] = useState(userInfo?.age || "");
+  const [avatar, setAvatar] = useState(userInfo?.avatar || "");
+  // console.log(
+  //   userInfo.name +
+  //     " " +
+  //     userInfo.email +
+  //     " " +
+  //     userInfo.age +
+  //     " " +
+  //     userInfo.avatar +
+  //     " " +
+  //     userInfo.username
+  // );
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await getProfile();
+        console.log(response.data);
         if (response.data) {
           dispatch(setUser(response.data));
         }
@@ -51,6 +65,7 @@ const Profile = () => {
       setEmail(userInfo.email || "");
       setUsername(userInfo.username || "");
       setAge(userInfo.age || "");
+      setAvatar(userInfo.avatar || "");
     }
   }, [userInfo]);
 
@@ -81,6 +96,7 @@ const Profile = () => {
     if (email !== userInfo.email) updatedFields.email = email;
     if (username !== userInfo.username) updatedFields.username = username;
     if (age !== userInfo.age) updatedFields.age = age;
+    if (avatar !== userInfo.avatar) updatedFields.avatar = avatar;
 
     if (Object.keys(updatedFields).length === 0) {
       setIsEditable(false);
@@ -90,10 +106,30 @@ const Profile = () => {
     try {
       const updatedUser = await updateProfile(updatedFields);
       dispatch(setUser(updatedUser));
+      console.log(
+        "name: " +
+          userInfo.name +
+          " email: " +
+          userInfo.email +
+          " age: " +
+          userInfo.age +
+          " avatar: " +
+          userInfo.avatar +
+          " username: " +
+          userInfo.username
+      );
       setIsEditable(false);
     } catch (error) {
       console.error("Error updating user profile:", error.message);
     }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    const base64File = await convertToBase64(file);
+    console.log(base64File);
+    setAvatar(base64File);
+    console.log(avatar);
   };
 
   return (
@@ -135,7 +171,10 @@ const Profile = () => {
               </div>
               <div className="top-bottom">
                 <h1>Hello {name} !</h1>
-                <p>This is your profile page. You can manage your projects or assigned tasks here.</p>
+                <p>
+                  This is your profile page. You can manage your projects or
+                  assigned tasks here.
+                </p>
                 <div className="buttons">
                   <ProfileButton
                     disabled={isEditable}
@@ -152,7 +191,10 @@ const Profile = () => {
                   )}
                 </div>
                 {isModalOpen && (
-                  <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                  <Modal
+                    open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                  >
                     <Box
                       sx={{
                         position: "absolute",
@@ -206,11 +248,13 @@ const Profile = () => {
                     value={name}
                     disabled={!isEditable}
                     onChange={(e) => setName(e.target.value)}
+                    className="normal"
                   />
                 </div>
                 <div className="profile-field">
                   <label>Username</label>
                   <TextField
+                    className="normal"
                     variant="outlined"
                     fullWidth
                     value={username}
@@ -221,6 +265,7 @@ const Profile = () => {
                 <div className="profile-field">
                   <label>Age</label>
                   <TextField
+                    className="normal"
                     variant="outlined"
                     fullWidth
                     value={age}
@@ -231,6 +276,7 @@ const Profile = () => {
                 <div className="profile-field">
                   <label>Email</label>
                   <TextField
+                    className="normal"
                     variant="outlined"
                     fullWidth
                     value={email}
@@ -241,17 +287,47 @@ const Profile = () => {
               </div>
               <div className="profile-right">
                 <div className="avatar-container">
-                  <img src={userInfo.avatar} alt="Profile" />
+                  <img src={avatar || "/defaultProfile2.jpg"} alt="Profile" />
+                  {isEditable && (
+                    <label htmlFor="file-upload">
+                      <img
+                        src="/editProfile.png"
+                        className="editProfile"
+                        alt="Edit Profile"
+                      />
+                    </label>
+                  )}
+                  <input
+                    type="file"
+                    id="file-upload"
+                    name="myFile"
+                    accept=".jpg, .jpeg, .png"
+                    style={{ display: "none" }} // Hide the input
+                    onChange={(e) => handleFileChange(e)} // Function to handle file selection
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <Header/>
+          <Header />
           <Outlet />
         </Box>
       </Box>
- </>
+    </>
   );
 };
 
 export default Profile;
+
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (err) => {
+      reject(err);
+    };
+  });
+}
