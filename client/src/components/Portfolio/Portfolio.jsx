@@ -52,6 +52,9 @@ const Portfolio = () => {
   // Calculate User Gain/Loss based on initial 10000 points
   const gainLoss = (balance - 10000).toFixed(2);
 
+    // Calculate Overall Portfolio Value
+  const overallPortfolioValue = portfolioData.reduce((acc, item) => acc + item.totalPortfolioValue, 0).toFixed(2);
+
   return (
     <Box sx={{ width: "100%", maxWidth: { sm: "100%", md: "1700px" }, padding: 2 }}>
       <Typography variant="h3" sx={{ mb: 2 }}>
@@ -67,7 +70,7 @@ const Portfolio = () => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid item xs={12} sm={6} md={4}>
-              <StatCard title="User Rank" value={rank} />
+              <StatCard title="Overall Portfolio Value" value={`$${overallPortfolioValue}`} />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <StatCard title="User Gain/Loss" value={`$${gainLoss}`} />
