@@ -14,7 +14,6 @@ import { useTheme } from "@mui/material";
 export default function MainGrid() {
   const [points, setPoints] = useState(0);
   const [balance, setBalance] = useState(0);
-  const [rank, setRank] = useState(0);
   const [portfolioData, setPortfolioData] = useState([]);
   const theme = useTheme();
 
@@ -25,7 +24,6 @@ export default function MainGrid() {
         console.log(response);
         setPoints(response.data.points);
         setBalance(Number(response.data.balance).toFixed(2));
-        setRank(response.data.userRank);
       } catch (error) {
         console.error("Error fetching user stats:", error);
       }
@@ -56,6 +54,12 @@ export default function MainGrid() {
   // Calculate User Gain/Loss based on initial 10000 points
   const gainLoss = (balance - 10000).toFixed(2);
 
+  // Calculate Overall Portfolio Value
+  const overallPortfolioValue = portfolioData.reduce(
+    (acc, item) => acc + item.totalPortfolioValue,
+    0
+  ).toFixed(2);
+
   return (
     <Box
       sx={{ width: "100%", maxWidth: { sm: "100%", md: "1700px" }, padding: 2 }}
@@ -76,10 +80,15 @@ export default function MainGrid() {
               <StatCard title="User Balance" value={`$${balance}`} />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <StatCard title="User Gain/Loss" value={gainLoss} />
+              <StatCard
+                title="User Gain/Loss"
+                value={gainLoss}
+                style={{ color: gainLoss >= 0 ? "green" : "red" }}
+              />
             </Grid>
+
             <Grid item xs={12} sm={6} md={4}>
-              <StatCard title="User Rank" value={rank} />
+              <StatCard title="Overall Portfolio Value" value={`$${overallPortfolioValue}`} />
             </Grid>
           </Grid>
 
@@ -96,7 +105,7 @@ export default function MainGrid() {
           </Box>
         </Box>
 
-        <Box sx={{ maxWidth: { xs: "100%", lg: "400px" }}}>
+        <Box sx={{ maxWidth: { xs: "100%", lg: "400px" } }}>
           <Stack direction="column" spacing={2}>
             <UserStockshare portfolioData={portfolioData} />
           </Stack>

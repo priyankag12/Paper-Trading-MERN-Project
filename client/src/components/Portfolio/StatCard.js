@@ -4,12 +4,11 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 
-function StatCard({ title, value, interval, trend, data }) {
+function StatCard({ title, value, trend, data, color }) {
   const theme = useTheme();
 
   const trendColors = {
@@ -18,22 +17,12 @@ function StatCard({ title, value, interval, trend, data }) {
     neutral: theme.palette.grey[500],
   };
 
-  const labelColors = {
-    up: 'success',
-    down: 'error',
-    neutral: 'default',
-  };
-
-  const color = labelColors[trend];
   const chartColor = trendColors[trend];
-  const trendValues = { up: '+25%', down: '-25%', neutral: '+5%' };
-
-  // Ensure `data` is an array of numbers; if not, provide a fallback
   const chartData = Array.isArray(data) && data.length ? data : [0];
 
   return (
-    <Card variant="outlined" sx={{ height: '100%', flexGrow: 1 }}>
-      <CardContent>
+    <Card variant="outlined" sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 0 }}>
+      <CardContent sx={{ flexGrow: 1 }}>
         <Typography
           component="h2"
           variant="subtitle2"
@@ -51,14 +40,14 @@ function StatCard({ title, value, interval, trend, data }) {
               direction="row"
               sx={{ justifyContent: 'space-between', alignItems: 'center' }}
             >
-              <Typography variant="h4" component="p">
+              <Typography
+                variant="h4"
+                component="p"
+                sx={{ color: color }}
+              >
                 {value}
               </Typography>
-              <Chip size="small" color={color} label={trendValues[trend]} />
             </Stack>
-            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              {interval}
-            </Typography>
           </Stack>
           <Box sx={{ width: '100%', height: 50 }}>
             <SparkLineChart
@@ -78,14 +67,14 @@ function StatCard({ title, value, interval, trend, data }) {
 StatCard.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  interval: PropTypes.string.isRequired,
-  trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
-  data: PropTypes.arrayOf(PropTypes.number).isRequired,
+  trend: PropTypes.oneOf(['down', 'neutral', 'up']),
+  data: PropTypes.arrayOf(PropTypes.number),
+  color: PropTypes.string.isRequired,
 };
 
-// Set a default value for `data` to prevent errors if it's ever undefined
 StatCard.defaultProps = {
-  data: [0], // Fallback to a single value array
+  data: [0],
+  trend: 'neutral',
 };
 
 export default StatCard;
