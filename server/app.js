@@ -15,11 +15,11 @@ const quizRoutes = require("./routes/quizRoutes");
 
 // Middleware
 app.use(
-  cors({
-    origin: true,
-    credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type"],
-  })
+    cors({
+        origin: "https://paper-lingo.vercel.app",
+        credentials: true,
+        allowedHeaders: ["Authorization", "Content-Type"],
+    })
 );
 app.use(express.json());
 
@@ -38,7 +38,7 @@ const port = process.env.PORT || 8000;
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server started on port: ${port}`);
+    console.log(`Server started on port: ${port}`);
 });
 
 module.exports = app;
