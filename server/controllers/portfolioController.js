@@ -68,11 +68,7 @@ const getPortfolioData = async (req, res) => {
                         100
                     ).toFixed(2)
                 );
-                portfolio[stockName].totalPortfolioValue = parseFloat(
-                    (
-                        portfolio[stockName].totalQuantity * currentStockPrice
-                    ).toFixed(2)
-                );
+                portfolio[stockName].totalPortfolioValue = parseFloat((portfolio[stockName].totalQuantity * portfolio[stockName].avgPurchasePrice).toFixed(2));
             } else {
                 // Stock sold out, set gain/loss and portfolio value to 0
                 portfolio[stockName].gainLossPercentage = 0;
