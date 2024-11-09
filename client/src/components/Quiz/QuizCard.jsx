@@ -1,22 +1,17 @@
+
 import React, { useState } from "react";
 import { Box, Button, Card, CardContent, Typography, Stack, LinearProgress, useTheme } from "@mui/material";
-
 
 const QuizCard = ({ questions, score, setScore, setShowScore }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [isAnswered, setIsAnswered] = useState(false);
   const [previousSelections, setPreviousSelections] = useState([]);
   const theme = useTheme();
 
   const handleOptionClick = (index) => {
     setSelectedOption(index);
-    setIsAnswered(true);
 
-    if (index === questions[currentQuestion].answer) {
-      setScore(score + 1);
-    }
-    
+    // Update previous selections to allow changing the selection
     setPreviousSelections((prev) => {
       const updatedSelections = [...prev];
       updatedSelections[currentQuestion] = index;
@@ -25,10 +20,14 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
   };
 
   const handleNextQuestion = () => {
+    // Check answer only when proceeding to the next question
+    if (previousSelections[currentQuestion] === questions[currentQuestion].answer) {
+      setScore((prevScore) => prevScore + 1);
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedOption(previousSelections[currentQuestion + 1] || null);
-      setIsAnswered(!!previousSelections[currentQuestion + 1]);
     } else {
       setShowScore(true);
     }
@@ -37,8 +36,7 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
   const handlePreviousQuestion = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
-      setSelectedOption(previousSelections[currentQuestion - 1]);
-      setIsAnswered(true);
+      setSelectedOption(previousSelections[currentQuestion - 1] || null);
     }
   };
 
@@ -78,15 +76,8 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
               onClick={() => handleOptionClick(index)}
               sx={{
                 textTransform: "none",
-                backgroundColor: isAnswered
-                  ? index === questions[currentQuestion].answer
-                    ? "green"
-                    : index === selectedOption
-                    ? "red"
-                    : ""
-                  : "",
+                backgroundColor: selectedOption === index ? theme.palette.primary.light : "",
               }}
-              disabled={isAnswered}
             >
               {String.fromCharCode(65 + index)}. {choice}
             </Button>
@@ -95,7 +86,7 @@ const QuizCard = ({ questions, score, setScore, setShowScore }) => {
 
         <Box sx={{ marginTop: 3, display: "flex", justifyContent: "space-between" }}>
           {currentQuestion > 0 && <Button variant="outlined" onClick={handlePreviousQuestion} sx={{ backgroundColor:theme.palette.accent.main, color:'white'}}>Previous Question</Button>}
-          {isAnswered && <Button variant="outlined" onClick={handleNextQuestion} sx={{ backgroundColor:theme.palette.accent.main, color:'white'}}>Next Question</Button>}
+          <Button variant="outlined" onClick={handleNextQuestion} sx={{ backgroundColor:theme.palette.accent.main, color:'white'}}>Next Question</Button>
         </Box>
       </CardContent>
     </Card>

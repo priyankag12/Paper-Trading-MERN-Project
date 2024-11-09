@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import { registerUser } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -59,6 +59,7 @@ export default function SignUp() {
     const [nameError, setNameError] = useState(false);
     const [nameErrorMessage, setNameErrorMessage] = useState("");
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -237,7 +238,7 @@ export default function SignUp() {
                         </Button>
                         <Typography sx={{ textAlign: "center" }}>
                             Already have an account?{" "}
-                            <Link href="/signin" variant="body2">
+                            <Link href="/signin" variant="h5" sx={{ color:theme.palette.accent.main }}>
                                 Sign in
                             </Link>
                         </Typography>

@@ -13,7 +13,7 @@ const ChatHistory = ({ chatHistory }) => {
           key={index}
           sx={{
             backgroundColor: message.type === "user" ? theme.palette.accent.main : theme.palette.primary.light,
-            paddingX: 1,
+            padding: 2,
             borderRadius: "8px",
             mb: 1,
             width: "80%",

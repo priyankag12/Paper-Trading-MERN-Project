@@ -50,8 +50,8 @@ export default function Header() {
             >
               <MenuIcon sx={{ fontSize: 25 }} />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
-              Company
+            <Typography variant="h5" component="div" sx={{ fontWeight: 600 }}>
+              PaperLingo
             </Typography>
           </Box>
 

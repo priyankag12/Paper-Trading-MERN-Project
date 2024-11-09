@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useTheme } from "@mui/material";
 
 const colors = [
     "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40",
@@ -18,6 +19,7 @@ export default function UserStockshare({ portfolioData }) {
     const [data, setData] = useState([]);
     const [stocks, setStocks] = useState([]);
     const [totalValue, setTotalValue] = useState("0");
+    const theme = useTheme();
 
     useEffect(() => {
         let total = 0;
@@ -50,8 +52,9 @@ export default function UserStockshare({ portfolioData }) {
                 flexDirection: "column",
                 gap: "8px",
                 flexGrow: 1,
-                maxHeight: { lg: "438px" },
+                maxHeight: { lg: "445px" },
                 overflowY: "auto",
+                border: `1px solid ${theme.palette.accent.main}`,
             }}
         >
             <CardContent>
@@ -97,7 +100,7 @@ export default function UserStockshare({ portfolioData }) {
                     </Box>
                     {/* Display arrow icon without functionality */}
                     <KeyboardArrowDownIcon 
-                        sx={{ fontSize: 35, display: { xs: 'none', lg: 'block' } }} 
+                        sx={{ fontSize: 35, display: { xs: 'none', lg: 'block' }, mb:1 }} 
                     />
                 </Box>
 
