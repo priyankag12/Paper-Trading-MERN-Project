@@ -1,13 +1,248 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+
+:root {
+  --primary-color: #673ab7;
+  --text-dark: #111827;
+  --text-light: #6b7280;
+  --white: #ffffff;
+  --max-width: 1400px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+img {
+  display: flex;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+}
+
+nav {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem 1rem;
+  border-bottom: 1px solid var(--text-light);
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.nav__logo div {
+    padding: 0.5rem 1rem; /* Adds space around the text */
+    display: grid;
+    place-content: center;
+    font-size: 1rem; /* Adjust font size as needed */
+    color: var(--primary-color);
+    
+    line-height: 1.2; /* Adjusts line height for better vertical alignment */
+  }
+  
+.nav__socials {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.nav__socials a {
+  padding: 5px 7px;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  background-color: #efeaee;
+  border-radius: 100%;
+}
+
+.nav__socials a:hover {
+  color: var(--white);
+  background-color: var(--text-light);
+}
+
+.nav__contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.nav__contact__card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav__contact__card span {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.nav__contact__card p {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.nav__contact__card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.header__container {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 2rem 1rem;
+  display: grid;
+  gap: 2rem;
+  text-align: center;
+}
+
+.header__container h1.large {
+        font-size: 7rem;  /* Set a much larger size */
+        font-weight: 700;
+        line-height: 8rem;
+        color: var(--text-dark);
+      }
+
+
+.header__container h1 span {
+  color: var(--primary-color);
+}
+
+.header__container p {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.75rem;
+}
+
+.header__container form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem 0;
+  background-color: #f6f4f7;
+  border-radius: 10px;
+}
+
+.header__container .input__row {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.header__container .input__group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__container .input__group span {
+  color: var(--text-dark);
+}
+
+.header__container input {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  background-color: transparent;
+}
+
+.header__container button {
+  width: 100%;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  white-space: nowrap;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+@media (width > 540px) {
+  .nav__contact {
+    gap: 2rem;
+  }
+
+  .nav__contact__card {
+    gap: 1rem;
+  }
+}
+
+@media (width > 768px) {
+  nav {
+    padding: 2rem 1rem;
+    flex-direction: row;
+  }
+
+  .nav__logo {
+    flex: 1;
+  }
+
+  .nav__contact {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .header__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    text-align: left;
+  }
+
+  .header__image {
+    grid-area: 1/2/2/3;
+    justify-self: auto;
+  }
+}
+
+@media (width > 1024px) {
+  .header__container form {
+    flex-direction: row;
+  }
+
+  .header__container button {
+    width: fit-content;
+  }
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.landing-page {
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-}
 
 .header {
     width: 100%;
@@ -21,7 +256,7 @@
 
 .header h1 {
     font-size: 24px;
-    color: #0073e6;
+    color:var(--primary-color);
     font-weight: bold;
 }
 
@@ -35,12 +270,12 @@
 }
 
 .nav a:hover {
-    color: #0073e6;
+    color:var(--primary-color);
 }
 
 .cta-button {
     padding: 10px 20px;
-    background-color: #0073e6;
+    background-color:var(--primary-color);
     color: #fff;
     border-radius: 5px;
     border: none;
@@ -49,26 +284,9 @@
 }
 
 .cta-button:hover {
-    background-color: #005bb5;
+    background-color: var(--primary-color);
 }
 
-.hero-section {
-    padding: 80px 10%;
-    background-color: #f5f8fa;
-    text-align: center;
-}
-
-.hero-content h2 {
-    font-size: 40px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.hero-content p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 30px;
-}
 
 .features-section,
 .how-it-works-section,
@@ -101,10 +319,11 @@
     transform: translateY(-5px);
 }
 
+
 .feature h4,
 .benefit h4 {
     font-size: 20px;
-    color: #0073e6;
+    color: #673ab7;
     margin-bottom: 10px;
 }
 
@@ -119,7 +338,9 @@
 }
 
 .steps li {
+    
     display: flex;
+    gap: 8rem;
     align-items: center;
     margin: 20px 0;
     padding: 20px;
@@ -134,7 +355,7 @@
 }
 
 .step-icon {
-    background-color: #0073e6;
+    background-color:#5e35b1;
     color: white;
     width: 40px;
     height: 40px;
@@ -151,17 +372,20 @@
     font-size: 20px;
     color: #333;
     margin-bottom: 5px;
+    justify-content: center;
+    
 }
 
 .step-content p {
     font-size: 16px;
     color: #666;
+    
 }
 
 .faq-section {
     padding: 60px 10%;
     text-align: center;
-    background-color: #e9f4fa; /* Light background color for FAQ */
+    background-color: #ede7f6; /* Light background color for FAQ */
     border-radius: 8px; /* Rounded corners for a softer look */
 }
 
@@ -173,14 +397,14 @@
 
 .faq-item {
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #ede7f6;
     border-radius: 5px;
     overflow: hidden;
 }
 
 .faq-question {
     padding: 10px;
-    background-color: #f0f0f0;
+    background-color: #b39ddb;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -195,7 +419,7 @@
 
 .footer {
     padding: 20px 10%;
-    background-color: #0073e6; /* Set a consistent color for the footer */
+    background-color:#512da8;
     color: #ffffff; /* Change text color to white for better contrast */
     text-align: center;
 }
@@ -204,4 +428,112 @@
 .footer p {
     margin: 0; /* Remove default margin for footer text */
 }
+.features-section {
+    text-align: center;
+    padding: 2rem 1rem; /* Added more space for a spacious feel */
+    border-radius: 10px; /* Smooth corners */
+  }
+  
+  .features-section h1,
+  .faq-section h1,
+  .benefits-section h1,
+  .how-it-works-section h1 
+   {
+    font-size: 2.5rem; /* Larger heading */
+    color: #333; /* Darker color for readability */
+    font-weight: 600; /* Slightly bolder */
+    margin-bottom: 1.5rem; /* Space below the heading */
+  }
+  
+  .carousel-container {
+    max-width: 1200px; /* Increased max-width for larger screens */
+    margin:0 auto;
+   
+    
+  }
+  
+  .feature-slide {
+    padding: 1.5rem; /* Increased padding for more space */
+    background:#d1c4e9; /* White background for the card */
+    border-radius: 12px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on hover */
+    margin: 2 1rem;
+    /* Margin between slides */
+  }
+  
+  .feature-slide:hover {
+    transform: translateY(-10px); /* Hover effect for a floating look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  }
+  
+  .feature-card {
+    height: 100%; /* Ensure cards take up full height of the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space between title and description */
+    text-align: center; /* Center content inside the card */
+    padding: 2rem;
+  }
+  
+  .feature-card .MuiCardContent-root {
+    padding: 1rem; /* Padding inside the card */
+  }
+  
+  .feature-card h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #555; /* Slightly lighter text for the title */
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    color: #777; /* Lighter color for the description */
+    line-height: 1.5; /* More readable text */
+  }
+  .faq-header
+  {
+    margin-bottom:2rem;
+    font-size:2rem;
+    font-weight: bold;
+  }
+  
 
+  
+  .feature-slide:hover {
+    transform: translateY(-10px); /* Hover effect for a floating look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  }
+  
+  .feature-card {
+    height: 100%; /* Ensure cards take up full height of the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space between title and description */
+    text-align: center; /* Center content inside the card */
+    padding: 2rem;
+  }
+  
+  .feature-card .MuiCardContent-root {
+    padding: 1rem; /* Padding inside the card */
+  }
+  
+  .feature-card h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #555; /* Slightly lighter text for the title */
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    color: #777; /* Lighter color for the description */
+    line-height: 1.5; /* More readable text */
+  }
+  .faq-header
+  {
+    margin-bottom:2rem;
+    font-size:2rem;
+    font-weight: bold;
+  }
