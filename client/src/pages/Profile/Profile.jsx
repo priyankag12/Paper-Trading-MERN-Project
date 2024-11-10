@@ -160,7 +160,7 @@ const Profile = () => {
         >
           <div className="profile-container">
             <div className="top-container">
-              <div className="top-top">
+              {/* <div className="top-top">
                 <h1>User Profile</h1>
                 <div className="profile-card">
                   <div>User-Profile</div>
@@ -168,7 +168,7 @@ const Profile = () => {
                     <img src="../../../public/defaultProfile.jpg" alt="" />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="top-bottom">
                 <h1>Hello {name} !</h1>
                 <p>

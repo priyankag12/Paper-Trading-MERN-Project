@@ -11,16 +11,16 @@ import {
   Alert,
   useTheme,
 } from "@mui/material";
-import QuizCard from "./QuizCard";
-import QuizRules from "./QuizRules";
+import QuizCard from "../../components/Quiz/QuizCard";
+import QuizRules from "../../components/Quiz/QuizRules";
 import {
   convertPoints,
   fetchQuizQuestions,
   getUserDetails,
 } from "../../api/quizApi";
-import MiniLeaderBoard from "./MiniLeaderBoard";
+import MiniLeaderBoard from "../../components/Quiz/MiniLeaderBoard";
 import { motion } from "framer-motion";
-import UserInfo from "./UserInfo";
+import UserInfo from "../../components/Quiz/UserInfo";
 
 const EarnPoints = () => {
   const [score, setScore] = useState(0);

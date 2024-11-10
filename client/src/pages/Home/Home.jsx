@@ -1,6 +1,6 @@
 import React from "react";
-import News from "../News/News";
-import MarketOverview from "../TopGainersLosers/MarketOverview";
+import News from "../../components/News/News";
+import MarketOverview from "../../components/TopGainersLosers/MarketOverview";
 import { motion } from 'framer-motion';
 
 const Home = () => {

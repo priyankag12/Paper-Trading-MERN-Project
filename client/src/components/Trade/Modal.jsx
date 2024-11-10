@@ -9,6 +9,8 @@ import {
     Typography,
     IconButton,
     useTheme,
+    Snackbar,
+    Alert
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -25,6 +27,7 @@ export default function Modal({
 }) {
     const theme = useTheme();
     const [quantity, setQuantity] = useState(1);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
     const totalCost = quantity * stockPrice;
 
     useEffect(() => {
@@ -76,6 +79,7 @@ export default function Modal({
                 `${transactionType} transaction successful:`,
                 response.data
             );
+            setSnackbarOpen(true);
             onClose();
         } catch (error) {
             console.error(
@@ -84,132 +88,159 @@ export default function Modal({
             );
         }
     };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="xs" PaperProps={{ sx: { borderRadius: 5 } }}>
-            <DialogTitle
-                sx={{
-                    backgroundColor: theme.palette.background.paper,
-                    color: theme.palette.text.primary,
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    fontSize: "1.5rem",
-                }}
+        <>
+            <Dialog
+                open={open}
+                onClose={onClose}
+                maxWidth="xs"
+                PaperProps={{ sx: { borderRadius: 5 } }}
             >
-                {transactionType} {selectedStock?.symbol}
-            </DialogTitle>
-            <DialogContent
-                sx={{
-                    backgroundColor: theme.palette.background.default,
-                    padding: "24px",
-                    width: "400px",
-                    height: "350px",
-                    alignItems: "center",
-                    textAlign: "center",
-                }}
-            >
-                <Typography
+                <DialogTitle
                     sx={{
-                        fontSize: "1.2rem",
-                        fontWeight: "500",
-                        marginBottom: "12px",
+                        backgroundColor: theme.palette.background.paper,
+                        color: theme.palette.text.primary,
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: "1.5rem",
                     }}
                 >
-                    {transactionType === "Buy"
-                        ? `Available Balance: $${balance.toFixed(2)}`
-                        : `Available to Sell: ${availableQuantity} shares`}
-                </Typography>
-                <Typography
+                    {transactionType} {selectedStock?.symbol}
+                </DialogTitle>
+                <DialogContent
                     sx={{
-                        fontSize: "1.2rem",
-                        fontWeight: "500",
-                        marginBottom: "24px",
+                        backgroundColor: theme.palette.background.default,
+                        padding: "24px",
+                        width: "400px",
+                        height: "350px",
+                        alignItems: "center",
+                        textAlign: "center",
                     }}
                 >
-                    Stock Price: ${stockPrice.toFixed(2)}
-                </Typography>
+                    <Typography
+                        sx={{
+                            fontSize: "1.2rem",
+                            fontWeight: "500",
+                            marginBottom: "12px",
+                        }}
+                    >
+                        {transactionType === "Buy"
+                            ? `Available Balance: $${balance.toFixed(2)}`
+                            : `Available to Sell: ${availableQuantity} shares`}
+                    </Typography>
+                    <Typography
+                        sx={{
+                            fontSize: "1.2rem",
+                            fontWeight: "500",
+                            marginBottom: "24px",
+                        }}
+                    >
+                        Stock Price: ${stockPrice.toFixed(2)}
+                    </Typography>
 
-                <Stack direction="row" spacing={1} alignItems="center">
-                    <IconButton onClick={handleDecreaseQuantity}>
-                        <RemoveIcon color="primary" />
-                    </IconButton>
-                    <TextField
-                        value={quantity}
-                        onChange={handleQuantityChange}
-                        inputProps={{
-                            min: 1,
-                            max:
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <IconButton onClick={handleDecreaseQuantity}>
+                            <RemoveIcon color="primary" />
+                        </IconButton>
+                        <TextField
+                            value={quantity}
+                            onChange={handleQuantityChange}
+                            inputProps={{
+                                min: 1,
+                                max:
+                                    transactionType === "Buy"
+                                        ? Math.floor(balance / stockPrice)
+                                        : availableQuantity,
+                                type: "number",
+                            }}
+                            sx={{
+                                "& .MuiInputBase-root": {
+                                    backgroundColor:
+                                        theme.palette.background.paper,
+                                    borderRadius: "8px",
+                                    fontSize: "1.2rem",
+                                },
+                                width: "80px",
+                            }}
+                        />
+                        <IconButton onClick={handleIncreaseQuantity}>
+                            <AddIcon color="primary" />
+                        </IconButton>
+                    </Stack>
+
+                    <Typography
+                        sx={{
+                            fontSize: "1.2rem",
+                            fontWeight: "500",
+                            marginTop: "16px",
+                        }}
+                    >
+                        Total {transactionType === "Buy" ? "Cost" : "Proceeds"}:
+                        ${totalCost.toFixed(2)}
+                    </Typography>
+
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{ marginTop: "20px", justifyContent: "center" }}
+                    >
+                        <Button
+                            onClick={onClose}
+                            color="secondary"
+                            sx={{
+                                backgroundColor: theme.palette.error.main,
+                                color: "#fff",
+                                textTransform: "none",
+                                fontSize: "1rem",
+                                "&:hover": {
+                                    backgroundColor: theme.palette.error.dark,
+                                },
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            color="primary"
+                            onClick={handleTransaction}
+                            disabled={
                                 transactionType === "Buy"
-                                    ? Math.floor(balance / stockPrice)
-                                    : availableQuantity,
-                            type: "number",
-                        }}
-                        sx={{
-                            "& .MuiInputBase-root": {
-                                backgroundColor: theme.palette.background.paper,
-                                borderRadius: "8px",
-                                fontSize: "1.2rem",
-                            },
-                            width: "80px",
-                        }}
-                    />
-                    <IconButton onClick={handleIncreaseQuantity}>
-                        <AddIcon color="primary" />
-                    </IconButton>
-                </Stack>
-
-                <Typography
-                    sx={{
-                        fontSize: "1.2rem",
-                        fontWeight: "500",
-                        marginTop: "16px",
-                    }}
+                                    ? totalCost > balance
+                                    : quantity > availableQuantity
+                            }
+                            sx={{
+                                backgroundColor: theme.palette.success.main,
+                                color: "#fff",
+                                textTransform: "none",
+                                fontSize: "1rem",
+                                "&:hover": {
+                                    backgroundColor: theme.palette.success.dark,
+                                },
+                            }}
+                        >
+                            Confirm {transactionType}
+                        </Button>
+                    </Stack>
+                </DialogContent>
+            </Dialog>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={handleSnackbarClose}
+                    severity="success"
+                    sx={{ width: "100%" }}
                 >
-                    Total {transactionType === "Buy" ? "Cost" : "Proceeds"}: $
-                    {totalCost.toFixed(2)}
-                </Typography>
-
-                <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{ marginTop: "20px", justifyContent: "center" }}
-                >
-                    <Button
-                        onClick={onClose}
-                        color="secondary"
-                        sx={{
-                            backgroundColor: theme.palette.error.main,
-                            color: "#fff",
-                            textTransform: "none",
-                            fontSize: "1rem",
-                            "&:hover": {
-                                backgroundColor: theme.palette.error.dark,
-                            },
-                        }}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        color="primary"
-                        onClick={handleTransaction}
-                        disabled={
-                            transactionType === "Buy"
-                                ? totalCost > balance
-                                : quantity > availableQuantity
-                        }
-                        sx={{
-                            backgroundColor: theme.palette.success.main,
-                            color: "#fff",
-                            textTransform: "none",
-                            fontSize: "1rem",
-                            "&:hover": {
-                                backgroundColor: theme.palette.success.dark,
-                            },
-                        }}
-                    >
-                        Confirm {transactionType}
-                    </Button>
-                </Stack>
-            </DialogContent>
-        </Dialog>
+                    Transaction Completed successfully!
+                </Alert>
+            </Snackbar>
+        </>
     );
 }

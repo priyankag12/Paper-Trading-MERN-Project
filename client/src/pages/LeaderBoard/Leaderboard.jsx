@@ -23,22 +23,17 @@ const StyledCard = styled(Card)(({ theme }) => ({
     margin: "auto",
     borderRadius: 16,
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    padding: theme.spacing(1),
-    border: `2px solid ${theme.palette.accent.main}`,
+    padding: theme.spacing(2),
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(1.5),
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
 }));
 
-const StyledDivider = styled(Divider)(({ theme }) => ({
-    backgroundColor: theme.palette.accent.main,
-}));
-
-const MiniLeaderBoard = () => {
+const Leaderboard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [leaderboard, setLeaderboard] = useState([]);
 
@@ -47,14 +42,15 @@ const MiniLeaderBoard = () => {
             try {
                 setIsLoading(true);
                 const response = await fetchLeaderBoard();
-                const rankedData = (response?.data?.ranking || [])
-                    .map((item, index) => ({
+                const rankedData = (response?.data?.ranking || []).map(
+                    (item, index) => ({
                         ...item,
                         index: index + 1,
-                    }))
-                    .slice(0, 3);
+                    })
+                );
 
                 setLeaderboard(rankedData || []);
+                console.log(leaderboard);
             } catch (error) {
                 console.error(
                     "Error fetching leaderboard: ",
@@ -77,8 +73,13 @@ const MiniLeaderBoard = () => {
             >
                 <StyledCard>
                     <CardContent>
-                        <Typography variant="h4" align="center" gutterBottom>
-                            Top 3
+                        <Typography
+                            variant="h4"
+                            align="center"
+                            fontWeight="bold"
+                            gutterBottom
+                        >
+                            Leaderboard
                         </Typography>
                         {isLoading ? (
                             <Box
@@ -146,7 +147,7 @@ const MiniLeaderBoard = () => {
                                                 Score: {row.points}
                                             </Typography>
                                         </StyledListItem>
-                                        <StyledDivider
+                                        <Divider
                                             variant="inset"
                                             component="li"
                                         />
@@ -165,4 +166,4 @@ const MiniLeaderBoard = () => {
     );
 };
 
-export default MiniLeaderBoard;
+export default Leaderboard;

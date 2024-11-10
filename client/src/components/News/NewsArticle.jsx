@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Card, CardContent, Typography, useTheme } from "@mui/material";
-import { formatDate } from "../utils/formatDate"; 
+import { formatDate } from "../../utils/formatDate"; 
 import { motion } from "framer-motion";
 
 const NewsArticle = ({ article, delay }) => {

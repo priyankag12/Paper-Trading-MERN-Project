@@ -3,10 +3,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import UserStockshare from "./UserStockshare";
-import PageViewsBarChart from "./PageViewsBarChart";
-import StatCard from "./StatCard";
-import PortfolioTable from "./PortfolioTable";
+import UserStockshare from "../../components/Portfolio/UserStockshare";
+import PageViewsBarChart from "../../components/Portfolio/PageViewsBarChart";
+import StatCard from "../../components/Portfolio/StatCard";
+import PortfolioTable from "../../components/Portfolio/PortfolioTable";
 import apiClient from "../../services/apiClient";
 import { getUserDetails } from "../../api/quizApi";
 

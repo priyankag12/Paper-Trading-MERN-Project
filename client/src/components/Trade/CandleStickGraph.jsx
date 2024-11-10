@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { getOHCLV } from "../services/getOHLCV";
-import { formatStockData } from "./utils/formatStockData";
+import React, { useMemo } from "react";
+import { formatStockData } from "../../utils/formatStockData";
 import ReactApexCharts from "react-apexcharts";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -19,9 +18,9 @@ const CandleStickGraph = ({ stockData }) => {
                 maxWidth: "100vw",
                 overflowX: "hidden",
                 height: "40vh",
-                border: `2px solid ${theme.palette.accent.main}`, 
+                border: `2px solid ${theme.palette.accent.main}`,
                 borderRadius: "8px",
-                scrollbarWidth: "thin", 
+                scrollbarWidth: "thin",
                 "&::-webkit-scrollbar": {
                     width: "8px",
                     height: "8px",
@@ -31,7 +30,7 @@ const CandleStickGraph = ({ stockData }) => {
                     borderRadius: "4px",
                 },
                 "&::-webkit-scrollbar-thumb:hover": {
-                    backgroundColor: theme.palette.neutral.light, 
+                    backgroundColor: theme.palette.neutral.light,
                 },
             }}
         >
