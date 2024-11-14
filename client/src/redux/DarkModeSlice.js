@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialMode = localStorage.getItem("themeMode") || "dark";
+const initialMode = localStorage.getItem("themeMode") || "light";
 
 export const globalSlice = createSlice({
     name: "global",
