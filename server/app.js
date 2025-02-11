@@ -13,14 +13,37 @@ const portfolioRoutes = require("./routes/portfolioRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 
-// Middleware
 app.use(
     cors({
-        origin: "*",
-        credentials: true,
+        origin: ["https://paper-lingo.vercel.app/", "http://localhost:3000"],
+        methods: "GET,POST,PUT,DELETE,OPTIONS",
         allowedHeaders: ["Authorization", "Content-Type"],
+        credentials: true,
     })
 );
+
+app.options("*", cors()); // Handle preflight requests
+
+// Ensure CORS headers are set in all responses
+app.use((req, res, next) => {
+    const allowedOrigins = [
+        "https://paper-lingo.vercel.app/",
+        "http://localhost:3000",
+    ];
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+    }
+
+    res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
+    res.header(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+    );
+    next();
+});
+
 app.use(express.json());
 
 //using ejs engine to render the change password form
